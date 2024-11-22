@@ -1,6 +1,6 @@
 {
   "name": "Web Install Sample",
-  "id": "https://kbhlee2121.github.io/pwa/web-install/",
+  "id": "WebInstallSample",
   "display": "standalone",
   "start_url": "./index.html",
   "theme_color": "#296f78",
