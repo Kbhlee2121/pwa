@@ -27,7 +27,7 @@ const installCrossOrigin = (e) => {
 
 // Same-origin with 2 params.
 const installSameOriginTwoParams = (e) => {
-  let manifest_id = "https://kbhlee2121.github.io/pwa/web-install/";
+  let manifest_id = "https://kbhlee2121.github.io/WebInstallSample";
   let install_url = "https://kbhlee2121.github.io/pwa/web-install/index.html";
   navigator.install(manifest_id, install_url);
 }
