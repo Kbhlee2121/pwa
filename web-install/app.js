@@ -34,8 +34,9 @@ const installSameOriginTwoParams = (e) => {
 
 // Same-origin with 0 params.
 const installSameOriginZeroParams = (e) => {
+  // Uncomment when 0 param is supported end to end.
   // navigator.install();
-  console.log("installSameOriginZeroParams button clicked");
+  console.log("installSameOriginZeroParams button clicked. Zero params is not supported yet.");
 }
 
 crossOriginBtn.addEventListener("click", installCrossOrigin);
