@@ -17,7 +17,8 @@ const sameOriginZeroParamsBtn = document.getElementById("installSameOriginZeroPa
 const sameOriginTwoParamSwitchedBtn = document.getElementById("installSameOriginTwoParamsSwitched");
 const crossOriginParamsSwitchedBtn = document.getElementById("installCrossOriginParamsSwitched");
 const crossOriginNoDefinedIdBtn = document.getElementById("installCrossOriginNoDefinedId");
-
+const sameOriginOneParamBtn = document.getElementById("installSameOriginOneParam");
+const crossOriginOneParamBtn = document.getElementById("installCrossOriginOneParam");
 
 // Handle install buttons.
 // Cross-origin requires 2 parameters.
@@ -29,12 +30,16 @@ const installCrossOrigin = (e) => {
   navigator.install(manifest_id, install_url);
 };
 
+const installCrossOriginOneParam = (e) => {
+  let install_url = "https://diek.us/bubble/";
+  navigator.install(install_url);
+}
+
 // Cross-origin without an id defined in the web app manifest.
 const installCrossOriginNoDefinedId = (e) => {
   // Amanda's web install sample app that doesn't have an ID defined in the manifest.
-  let manifest_id ="puppy";
   let install_url = "https://amandabaker.github.io/pwa/web-install/index.html";
-  navigator.install(manifest_id, install_url);
+  navigator.install(install_url);
 }
 
 // Same-origin with 2 params.
@@ -55,8 +60,8 @@ const installCrossOriginParamsSwitched = (e) => {
 
 // Same-origin with 2 params switched.
 const installSameOriginTwoParamsSwitched = (e) => {
-  let manifest_id = "https://kbhlee2121.github.io/WebInstallSample";
   let install_url = "https://kbhlee2121.github.io/pwa/web-install/index.html";
+  let manifest_id = "https://kbhlee2121.github.io/WebInstallSample";
   navigator.install(install_url, manifest_id);
 }
 
@@ -67,14 +72,19 @@ const installSameOriginZeroParams = (e) => {
   console.log("installSameOriginZeroParams button clicked.");
 }
 
+const installSameOriginOneParam = (e) => {
+  let install_url = "https://kbhlee2121.github.io/pwa/web-install/index.html";
+  navigator.install(install_url);
+}
+
 crossOriginBtn.addEventListener("click", installCrossOrigin);
 sameOriginTwoParamsBtn.addEventListener("click", installSameOriginTwoParams);
 sameOriginZeroParamsBtn.addEventListener("click", installSameOriginZeroParams);
 sameOriginTwoParamSwitchedBtn.addEventListener("click", installSameOriginTwoParamsSwitched);
 crossOriginParamsSwitchedBtn.addEventListener("click", installCrossOriginParamsSwitched);
 crossOriginNoDefinedIdBtn.addEventListener("click", installCrossOriginNoDefinedId);
-
-
+sameOriginOneParamBtn.addEventListener("click", installSameOriginOneParam);
+crossOriginOneParamBtn.addEventListener("click", installCrossOriginOneParam);
 
 // const installCustom = (e) => {}
 // document.getElementById("installCrossOrigin").addEventListener("click", installCrossOrigin);
