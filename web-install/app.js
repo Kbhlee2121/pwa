@@ -12,7 +12,7 @@ if (navigator.serviceWorker) {
 }
 
 const crossOriginBtn = document.getElementById("installCrossOrigin");
-const sameOriginTwoParamsBtn = document.getElementById("installSameOriginTwoParams");
+const sameOriginTwoParamsBtn = document.getElementById("installSameOriginTwoParamsSwitched");
 const sameOriginZeroParamsBtn = document.getElementById("installSameOriginZeroParams");
 const sameOriginTwoParamSwitchedBtn = document.getElementById("installSameOriginTwoParamsSwitched");
 const crossOriginParamsSwitchedBtn = document.getElementById("installCrossOriginParamsSwitched");
