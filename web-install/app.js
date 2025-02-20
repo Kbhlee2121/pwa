@@ -19,6 +19,8 @@ const crossOriginParamsSwitchedBtn = document.getElementById("installCrossOrigin
 const crossOriginNoDefinedIdBtn = document.getElementById("installCrossOriginNoDefinedId");
 const sameOriginOneParamBtn = document.getElementById("installSameOriginOneParam");
 const crossOriginOneParamBtn = document.getElementById("installCrossOriginOneParam");
+const installOneParamNulloptBtn = document.getElementById("installOneParamNullopt");
+const installOneParamInvalidUrlBtn = document.getElementById("installOneParamInvalidUrl");
 
 // Handle install buttons.
 // Cross-origin requires 2 parameters.
@@ -77,6 +79,14 @@ const installSameOriginOneParam = (e) => {
   navigator.install(install_url);
 }
 
+const installOneParamNullopt = (e) => {
+  navigator.install(nullopt);
+}
+
+const installOneParamInvalidUrl = (e) => {
+  navigator.install("badurl");
+}
+
 crossOriginBtn.addEventListener("click", installCrossOrigin);
 sameOriginTwoParamsBtn.addEventListener("click", installSameOriginTwoParams);
 sameOriginZeroParamsBtn.addEventListener("click", installSameOriginZeroParams);
@@ -85,6 +95,8 @@ crossOriginParamsSwitchedBtn.addEventListener("click", installCrossOriginParamsS
 crossOriginNoDefinedIdBtn.addEventListener("click", installCrossOriginNoDefinedId);
 sameOriginOneParamBtn.addEventListener("click", installSameOriginOneParam);
 crossOriginOneParamBtn.addEventListener("click", installCrossOriginOneParam);
+installOneParamNulloptBtn.addEventListener("click", installOneParamNullopt);
+installOneParamInvalidUrlBtn.addEventListener("click", installOneParamInvalidUrl);
 
 // const installCustom = (e) => {}
 // document.getElementById("installCrossOrigin").addEventListener("click", installCrossOrigin);
