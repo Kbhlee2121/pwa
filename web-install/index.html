@@ -58,12 +58,13 @@
     <button id="installCrossOriginNoDefinedId">Install (1 params)</button>
 
     <h2 style="color:Tomato;">Error cases - bad JS input</h2>
-    <h3>1 param nullopt</h3>
+    <h3>1 param undefined</h3>
     <p>Executes:</p>
     <pre><code>
-      navigator.install(nullopt);
+      let install_url = undefined;
+      navigator.install(install_url);
     </code></pre>
-    <button id="installOneParamNullopt">Install (1 params)</button>
+    <button id="installOneParamUndefined">Install (1 params)</button>
 
     <h3>1 param invalid URL</h3>
     <p>Executes:</p>
@@ -72,6 +73,15 @@
       navigator.install(install_url);
     </code></pre>
     <button id="installOneParamInvalidUrl">Install (1 params)</button>
+
+    <h3>2 param undefined url</h3>
+    <p>Executes:</p>
+    <pre><code>
+      let install_url = undefined;
+      let manifest_id = "https://diek.us/bubble/index.html";
+      navigator.install(install_url, manifest_id);
+    </code></pre>
+    <button id="installTwoParamsUndefinedUrl">Install (2 params)</button>
 
     <h2 style="color:Tomato;">Edge cases - current doc install with params</h2>
     <h2>Current Doc install same-origin with 1 parameter</h2>

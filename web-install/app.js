@@ -19,8 +19,9 @@ const crossOriginParamsSwitchedBtn = document.getElementById("installCrossOrigin
 const crossOriginNoDefinedIdBtn = document.getElementById("installCrossOriginNoDefinedId");
 const sameOriginOneParamBtn = document.getElementById("installSameOriginOneParam");
 const crossOriginOneParamBtn = document.getElementById("installCrossOriginOneParam");
-const installOneParamNulloptBtn = document.getElementById("installOneParamNullopt");
+const installOneParamUndefinedBtn = document.getElementById("installOneParamUndefined");
 const installOneParamInvalidUrlBtn = document.getElementById("installOneParamInvalidUrl");
+const installTwoParamsUndefinedUrlBtn = document.getElementById("installTwoParamsUndefinedUrl");
 
 // Handle install buttons.
 // Cross-origin requires 2 parameters.
@@ -79,12 +80,19 @@ const installSameOriginOneParam = (e) => {
   navigator.install(install_url);
 }
 
-const installOneParamNullopt = (e) => {
-  navigator.install(nullopt);
+const installOneParamUndefined = (e) => {
+  let install_url = undefined;
+  navigator.install(install_url);
 }
 
 const installOneParamInvalidUrl = (e) => {
   navigator.install("badurl");
+}
+
+const installTwoParamsUndefinedUrl = (e) => {
+  let install_url = undefined;
+  let manifest_id = "https://diek.us/bubble/index.html";
+  navigator.install(install_url, manifest_id);
 }
 
 crossOriginBtn.addEventListener("click", installCrossOrigin);
@@ -95,8 +103,9 @@ crossOriginParamsSwitchedBtn.addEventListener("click", installCrossOriginParamsS
 crossOriginNoDefinedIdBtn.addEventListener("click", installCrossOriginNoDefinedId);
 sameOriginOneParamBtn.addEventListener("click", installSameOriginOneParam);
 crossOriginOneParamBtn.addEventListener("click", installCrossOriginOneParam);
-installOneParamNulloptBtn.addEventListener("click", installOneParamNullopt);
+installOneParamUndefinedBtn.addEventListener("click", installOneParamUndefined);
 installOneParamInvalidUrlBtn.addEventListener("click", installOneParamInvalidUrl);
+installTwoParamsUndefinedUrlBtn.addEventListener("click", installTwoParamsUndefinedUrl);
 
 // const installCustom = (e) => {}
 // document.getElementById("installCrossOrigin").addEventListener("click", installCrossOrigin);
