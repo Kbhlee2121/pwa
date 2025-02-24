@@ -81,7 +81,7 @@ const installSameOriginOneParam = (e) => {
 }
 
 const installOneParamUndefined = (e) => {
-  let install_url = undefined;
+  let install_url;
   navigator.install(install_url);
 }
 
@@ -90,14 +90,14 @@ const installOneParamInvalidUrl = (e) => {
 }
 
 const installTwoParamsUndefinedUrl = (e) => {
-  let install_url = undefined;
+  let install_url;
   let manifest_id = "https://diek.us/bubble/index.html";
   navigator.install(install_url, manifest_id);
 }
 
 const installTwoParamsUndefinedManifestId = (e) => {
   let install_url = "https://kbhlee2121.github.io/pwa/web-install/index.html";
-  let manifest_id = undefined;
+  let manifest_id;
   navigator.install(install_url, manifest_id);
 }
 
