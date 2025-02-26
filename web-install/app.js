@@ -16,7 +16,9 @@ const sameOriginTwoParamsBtn = document.getElementById("installSameOriginTwoPara
 const sameOriginZeroParamsBtn = document.getElementById("installSameOriginZeroParams");
 const sameOriginTwoParamSwitchedBtn = document.getElementById("installSameOriginTwoParamsSwitched");
 const crossOriginParamsSwitchedBtn = document.getElementById("installCrossOriginParamsSwitched");
-const crossOriginNoDefinedIdBtn = document.getElementById("installCrossOriginNoDefinedId");
+const installOneParamNoDefinedIdBtn = document.getElementById("installOneParamNoDefinedId");
+const installTwoParamsMismatchedDefinedIdBtn = document.getElementById("installTwoParamsMismatchedDefinedId");
+const installTwoParamsMismatchedNoDefinedIdBtn = document.getElementById("installTwoParamsMismatchedNoDefinedId");
 const sameOriginOneParamBtn = document.getElementById("installSameOriginOneParam");
 const crossOriginOneParamBtn = document.getElementById("installCrossOriginOneParam");
 const installOneParamUndefinedBtn = document.getElementById("installOneParamUndefined");
@@ -38,11 +40,24 @@ const installCrossOriginOneParam = (e) => {
   navigator.install(install_url);
 }
 
-// Cross-origin without an id defined in the web app manifest.
-const installCrossOriginNoDefinedId = (e) => {
+// 1 param install url with no id defined in the web app manifest.
+const installOneParamNoDefinedId = (e) => {
   // Amanda's web install sample app that doesn't have an ID defined in the manifest.
   let install_url = "https://amandabaker.github.io/pwa/web-install/index.html";
   navigator.install(install_url);
+}
+
+// 2 param install url WITH an id defined in the manifest, but mismatched input param
+const installTwoParamsMismatchedDefinedId = (e) => {
+  let install_url = "https://diek.us/bubble/";
+  let manifest_id = "mismatched-manifest-id";
+  navigator.install(install_url, manifest_id);
+}
+
+const installTwoParamsMismatchedNoDefinedId = (e) => {
+  let install_url = "https://amanda.github.io/pwa/web-install/index.html";
+  let manifest = "mismatched-manifest-id";
+  navigator.install(install_url, manifest);
 }
 
 // Same-origin with 2 params.
@@ -106,7 +121,9 @@ sameOriginTwoParamsBtn.addEventListener("click", installSameOriginTwoParams);
 sameOriginZeroParamsBtn.addEventListener("click", installSameOriginZeroParams);
 sameOriginTwoParamSwitchedBtn.addEventListener("click", installSameOriginTwoParamsSwitched);
 crossOriginParamsSwitchedBtn.addEventListener("click", installCrossOriginParamsSwitched);
-crossOriginNoDefinedIdBtn.addEventListener("click", installCrossOriginNoDefinedId);
+installOneParamNoDefinedIdBtn.addEventListener("click", installOneParamNoDefinedId);
+installTwoParamsMismatchedDefinedIdBtn.addEventListener("click", installTwoParamsMismatchedDefinedId);
+installTwoParamsMismatchedNoDefinedIdBtn.addEventListener("click", installTwoParamsMismatchedNoDefinedId);
 sameOriginOneParamBtn.addEventListener("click", installSameOriginOneParam);
 crossOriginOneParamBtn.addEventListener("click", installCrossOriginOneParam);
 installOneParamUndefinedBtn.addEventListener("click", installOneParamUndefined);
