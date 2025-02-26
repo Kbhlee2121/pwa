@@ -36,7 +36,7 @@ const installCrossOrigin = (e) => {
 };
 
 const installCrossOriginOneParam = (e) => {
-  let install_url = "https://diek.us/bubble/";
+  let install_url = "https://mustjab.github.io/";
   navigator.install(install_url);
 }
 
@@ -49,13 +49,13 @@ const installOneParamNoDefinedId = (e) => {
 
 // 2 param install url WITH an id defined in the manifest, but mismatched input param
 const installTwoParamsMismatchedDefinedId = (e) => {
-  let install_url = "https://diek.us/bubble/";
+  let install_url = "https://mustjab.github.io/";
   let manifest_id = "mismatched-manifest-id";
   navigator.install(install_url, manifest_id);
 }
 
 const installTwoParamsMismatchedNoDefinedId = (e) => {
-  let install_url = "https://amanda.github.io/pwa/web-install/index.html";
+  let install_url = "https://amandabaker.github.io/pwa/web-install/index.html";
   let manifest = "mismatched-manifest-id";
   navigator.install(install_url, manifest);
 }
