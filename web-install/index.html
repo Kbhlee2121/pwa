@@ -45,6 +45,15 @@
     </code></pre>
     <button id="installCrossOriginParamsSwitched">Install (2 params)</button>
 
+    <h3>2 param, background doc, cross origin, with screenshots</h3>
+    <p>Executes:</p>
+    <pre><code>
+      let install_url = "https://earth.google.com/";
+      let manifest_id = "https://earth.google.com/";
+      navigator.install(install_url, manifest_id);
+    </code></pre>
+    <button id="installCrossOriginScreenshots">Install (2 params)</button>
+
     <h2 style="color:Tomato;">DataError cases - manifest id checks </h2>
 
     <h3>0 param, current doc, same origin</h3>

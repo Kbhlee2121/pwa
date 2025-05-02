@@ -25,6 +25,7 @@ const installOneParamUndefinedBtn = document.getElementById("installOneParamUnde
 const installOneParamInvalidUrlBtn = document.getElementById("installOneParamInvalidUrl");
 const installTwoParamsUndefinedUrlBtn = document.getElementById("installTwoParamsUndefinedUrl");
 const installTwoParamsUndefinedManifestIdBtn = document.getElementById("installTwoParamsUndefinedManifestId");
+const installCrossOriginScreenshotsBtn = document.getElementById("installCrossOriginScreenshots");
 // Handle install buttons.
 // Cross-origin requires 2 parameters.
 const installCrossOrigin = (e) => {
@@ -75,6 +76,12 @@ const installCrossOriginParamsSwitched = (e) => {
   let install_url = "https://diek.us/bubble/";
   navigator.install(install_url, manifest_id);
 };
+
+const installCrossOriginScreenshots = (e) => {
+  let install_url = "https://earth.google.com/";
+  let manifest_id = "https://earth.google.com/";
+  navigator.install(install_url, manifest_id);
+}
 
 // Same-origin with 2 params switched.
 const installSameOriginTwoParamsSwitched = (e) => {
@@ -130,6 +137,7 @@ installOneParamUndefinedBtn.addEventListener("click", installOneParamUndefined);
 installOneParamInvalidUrlBtn.addEventListener("click", installOneParamInvalidUrl);
 installTwoParamsUndefinedUrlBtn.addEventListener("click", installTwoParamsUndefinedUrl);
 installTwoParamsUndefinedManifestIdBtn.addEventListener("click", installTwoParamsUndefinedManifestId);
+installCrossOriginScreenshotsBtn.addEventListener("click", installCrossOriginScreenshots);
 // const installCustom = (e) => {}
 // document.getElementById("installCrossOrigin").addEventListener("click", installCrossOrigin);
 // document.getElementById("installSameOriginTwoParams").addEventListener("click", installSameOriginTwoParams);
