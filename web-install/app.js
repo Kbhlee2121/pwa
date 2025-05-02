@@ -78,8 +78,8 @@ const installCrossOriginParamsSwitched = (e) => {
 };
 
 const installCrossOriginScreenshots = (e) => {
-  let install_url = "https://earth.google.com/web/";
-  let manifest_id = "https://earth.google.com/";
+  let install_url = "https://squoosh.app/";
+  let manifest_id = "https://squoosh.app/?utm_medium=PWA&utm_source=launcher";
   navigator.install(install_url, manifest_id);
 }
 
