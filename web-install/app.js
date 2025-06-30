@@ -11,7 +11,6 @@ if (navigator.serviceWorker) {
   registerServiceWorker();
 }
 
-const crossOriginBtn = document.getElementById("installCrossOrigin");
 const sameOriginTwoParamsBtn = document.getElementById("installSameOriginTwoParamsSwitched");
 const sameOriginZeroParamsBtn = document.getElementById("installSameOriginZeroParams");
 const sameOriginTwoParamSwitchedBtn = document.getElementById("installSameOriginTwoParamsSwitched");
@@ -27,15 +26,6 @@ const installTwoParamsUndefinedUrlBtn = document.getElementById("installTwoParam
 const installTwoParamsUndefinedManifestIdBtn = document.getElementById("installTwoParamsUndefinedManifestId");
 const installCrossOriginScreenshotsBtn = document.getElementById("installCrossOriginScreenshots");
 // Handle install buttons.
-// Cross-origin requires 2 parameters.
-const installCrossOrigin = (e) => {
-  // Make sure to update the visible code sample in index.html when updating
-  // this.
-  let manifest_id = "https://diek.us/bubble/index.html";
-  let install_url = "https://diek.us/bubble/";
-  navigator.install(manifest_id, install_url);
-};
-
 const installCrossOriginOneParam = (e) => {
   let install_url = "https://mustjab.github.io/";
   navigator.install(install_url);
@@ -123,7 +113,6 @@ const installTwoParamsUndefinedManifestId = (e) => {
   navigator.install(install_url, manifest_id);
 }
 
-crossOriginBtn.addEventListener("click", installCrossOrigin);
 sameOriginTwoParamsBtn.addEventListener("click", installSameOriginTwoParams);
 sameOriginZeroParamsBtn.addEventListener("click", installSameOriginZeroParams);
 sameOriginTwoParamSwitchedBtn.addEventListener("click", installSameOriginTwoParamsSwitched);
