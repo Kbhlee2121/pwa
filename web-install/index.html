@@ -11,13 +11,21 @@
   <body>
     <h1>Web Install Sample</h1>
     <p>
-      A debugging tool for the Web Install API. See more info in the
+      A test app and debugging tool for the Web Install API. See more info in the
       <a
         href="https://github.com/MicrosoftEdge/MSEdgeExplainers/blob/main/WebInstall/explainer.md"
-        >explainer</a
-      >
-      and to-do's in this
-      <a href="https://github.com/amandabaker/pwa/issues/22">GitHub issue</a>.
+        >Explainer</a>.
+    </p>
+    <p>
+      We'd love to hear your feedback! To share feedback, please create a
+      <a href="https://github.com/MicrosoftEdge/MSEdgeExplainers/issues/new?template=web-install-api.md">GitHub issue</a>.
+    </p>
+    <h3>Note:</h3>
+    <p>
+      Current document installs = installing the current page.
+    </p>
+    <p>
+      Background document installs = installing anything else that's not the current page.
     </p>
 
     <h2 style="color:Tomato;">Intended use cases</h2>
@@ -33,7 +41,7 @@
     <p>Executes:</p>
     <pre><code>
       let install_url = "https://mustjab.github.io/";
-      navigator.install(install_url);
+      await navigator.install(install_url);
     </code></pre>
     <button id="installCrossOriginOneParam">Install (1 params)</button>
 
@@ -42,7 +50,7 @@
     <pre><code>
       let install_url = "https://diek.us/bubble/";
       let manifest_id = "https://diek.us/bubble/index.html";
-      navigator.install(install_url, manifest_id);
+      await navigator.install(install_url, manifest_id);
     </code></pre>
     <button id="installCrossOriginTwoParams">Install (2 params)</button>
 
@@ -52,7 +60,7 @@
     <pre><code>
       let install_url = "https://squoosh.app/";
       let manifest_id = "https://squoosh.app/?utm_medium=PWA&utm_source=launcher";
-      navigator.install(install_url, manifest_id);
+      await navigator.install(install_url, manifest_id);
     </code></pre>
     <button id="installCrossOriginScreenshots">Install (2 params)</button>
 
@@ -62,7 +70,7 @@
     <p>Executes:</p>
     <pre><code>
       let install_url = "https://amandabaker.github.io/pwa/web-install/index.html";
-      navigator.install(install_url);
+      await navigator.install(install_url);
     </code></pre>
     <button id="installOneParamNoDefinedId">Install (1 params)</button>
 
@@ -71,7 +79,7 @@
     <pre><code>
       let install_url = "https://mustjab.github.io/";
       let manifest_id = "mismatched-manifest-id";
-      navigator.install(install_url, manifest_id);
+      await navigator.install(install_url, manifest_id);
     </code></pre>
     <button id="installTwoParamsMismatchedDefinedId">Install (2 params)</button>
 
@@ -80,7 +88,7 @@
     <pre><code>
       let install_url = "https://amandabaker.github.io/pwa/web-install/index.html";
       let manifest_id = "mismatched-manifest-id";
-      navigator.install(install_url, manifest_id);
+      await navigator.install(install_url, manifest_id);
     </code></pre>
     <button id="installTwoParamsMismatchedNoDefinedId">Install (2 params)</button>
 
@@ -90,7 +98,7 @@
     <p>Executes:</p>
     <pre><code>
       let install_url;
-      navigator.install(install_url);
+      await navigator.install(install_url);
     </code></pre>
     <button id="installOneParamUndefined">Install (1 params)</button>
 
@@ -98,7 +106,7 @@
     <p>Executes:</p>
     <pre><code>
       let install_url = "badurl";
-      navigator.install(install_url);
+      await navigator.install(install_url);
     </code></pre>
     <button id="installOneParamInvalidUrl">Install (1 params)</button>
 
@@ -107,7 +115,7 @@
     <pre><code>
       let install_url;
       let manifest_id = "https://diek.us/bubble/index.html";
-      navigator.install(install_url, manifest_id);
+      await navigator.install(install_url, manifest_id);
     </code></pre>
     <button id="installTwoParamsUndefinedUrl">Install (2 params)</button>
 
@@ -116,7 +124,7 @@
     <pre><code>
       let install_url = "https://kbhlee2121.github.io/pwa/web-install/index.html";
       let manifest_id;
-      navigator.install(install_url, manifest_id);
+      await navigator.install(install_url, manifest_id);
     </code></pre>
     <button id="installTwoParamsUndefinedManifestId">Install (2 params)</button>
 
@@ -126,7 +134,7 @@
     <p>Executes:</p>
     <pre><code>
       let install_url = "https://kbhlee2121.github.io/pwa/web-install/index.html";
-      navigator.install(install_url);
+      await navigator.install(install_url);
     </code></pre>
     <button id="installSameOriginOneParam">Install (1 params)</button>
 
@@ -135,7 +143,7 @@
     <pre><code>
       let install_url = "https://kbhlee2121.github.io/pwa/web-install/index.html";
       let manifest_id = "https://kbhlee2121.github.io/WebInstallSample";
-      navigator.install(install_url, manifest_id);
+      await navigator.install(install_url, manifest_id);
     </code></pre>
     <button id="installSameOriginTwoParams">Install (2 params)</button>
 
