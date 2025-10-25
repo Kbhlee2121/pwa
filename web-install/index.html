@@ -57,7 +57,7 @@
     <button id="installCrossOriginTwoParams">Install (2 params)</button>
 
     <h3>2 param, background doc, cross origin, with screenshots</h3>
-    <p>*Note - for internal testing</p>
+    <p>*Note - screenshots not yet supported</p>
     <p>Executes:</p>
     <pre><code>
       let install_url = "https://squoosh.app/";
@@ -65,6 +65,25 @@
       await navigator.install(install_url, manifest_id);
     </code></pre>
     <button id="installCrossOriginScreenshots">Install (2 params)</button>
+
+    <h2 style="color:Tomato;">Edge case - installing self with params</h2>
+    <p>*Note - Although the end result is the same ('foo' site installs itself), passing parameters like this will launch the foo app in a new window, preserving the 'foo' tab in the main browser window. </p>
+    <h3>Install self, 1 parameter</h3>
+    <p>Executes:</p>
+    <pre><code>
+      let install_url = "https://kbhlee2121.github.io/pwa/web-install/index.html";
+      await navigator.install(install_url);
+    </code></pre>
+    <button id="installSameOriginOneParam">Install (1 params)</button>
+
+    <h3>Install self, 2 parameters</h3>
+    <p>Executes:</p>
+    <pre><code>
+      let install_url = "https://kbhlee2121.github.io/pwa/web-install/index.html";
+      let manifest_id = "https://kbhlee2121.github.io/WebInstallSample";
+      await navigator.install(install_url, manifest_id);
+    </code></pre>
+    <button id="installSameOriginTwoParams">Install (2 params)</button>
 
     <h2 style="color:Tomato;">DataError cases - manifest id validation</h2>
 
@@ -129,25 +148,6 @@
       await navigator.install(install_url, manifest_id);
     </code></pre>
     <button id="installTwoParamsUndefinedManifestId">Install (2 params)</button>
-
-    <h2 style="color:Tomato;">Edge cases - installing self with params</h2>
-    <p>*Note - currently these are treated as current doc installs, meaning they reparent the current web contents. This may change in the future.</p>
-    <h3>Install self, 1 parameter</h3>
-    <p>Executes:</p>
-    <pre><code>
-      let install_url = "https://kbhlee2121.github.io/pwa/web-install/index.html";
-      await navigator.install(install_url);
-    </code></pre>
-    <button id="installSameOriginOneParam">Install (1 params)</button>
-
-    <h3>Install self, 2 parameters</h3>
-    <p>Executes:</p>
-    <pre><code>
-      let install_url = "https://kbhlee2121.github.io/pwa/web-install/index.html";
-      let manifest_id = "https://kbhlee2121.github.io/WebInstallSample";
-      await navigator.install(install_url, manifest_id);
-    </code></pre>
-    <button id="installSameOriginTwoParams">Install (2 params)</button>
 
     <!-- <h2>Install with custom info</h2>
     <p>Executes <code>navigator.install(manifest_id, install_url)</code> using:</p>
