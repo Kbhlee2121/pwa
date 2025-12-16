@@ -202,3 +202,24 @@ sameOriginTwoParamsBtn.addEventListener("click", async() => {
     console.error(err);
   } 
 });
+
+// <install> Element Cases
+if ('HTMLInstallElement' in window) {
+  document.querySelectorAll('install').forEach((el, index) => {
+    // Create identifier for debugging
+    const installUrl = el.getAttribute('installurl') || 'current-page';
+    const manifestId = el.getAttribute('manifestid') || 'default';
+    const identifier = `install-${index} (${installUrl})`;
+    
+    el.addEventListener('promptaction', (event) => {
+      console.log(`${identifier} - promptaction:`, event);
+    });
+    
+    el.addEventListener('promptdismiss', (event) => {
+      console.log(`${identifier} - promptdismiss:`, event);
+    });
+  });
+} else {
+  console.warn('HTMLInstallElement not supported');
+}
+
