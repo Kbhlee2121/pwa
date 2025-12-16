@@ -150,7 +150,7 @@
     <button id="installTwoParamsUndefinedManifestId">Install (2 params)</button>
 
     <!-- requires #enable-experimental-web-platform-features -->
-    <h3>Experimental</h3>
+    <h1>Experimental</h1>
     <p>NOTE: For internal testing.</p>
     <p>Executes:</p>
     <pre><code>
@@ -175,6 +175,29 @@
       &lt;install manifest="https://mustjab.github.io/"&gt;&lt;/install&gt;
     </code></pre>
     <install  manifest="https://mustjab.github.io/"></install>
+
+    <h2 style="color:Tomato;">DataError cases - manifest id validation (install element)</h2>
+
+    <h3>1 param, background doc, NO id in manifest</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install installurl="https://amandabaker.github.io/pwa/web-install/index.html"&gt;&lt;/install&gt;
+    </code></pre>
+    <install installurl="https://amandabaker.github.io/pwa/web-install/index.html"></install>
+
+    <h3>2 params, background doc, YES id in manifest, mismatched input</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install installurl="https://mustjab.github.io/" manifestid="mismatched-manifest-id"&gt;&lt;/install&gt;
+    </code></pre>
+    <install installurl="https://mustjab.github.io/" manifestid="mismatched-manifest-id"></install>
+
+    <h3>2 params, background doc, NO id in manifest, mismatched input</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install installurl="https://amandabaker.github.io/pwa/web-install/index.html" manifestid="mismatched-manifest-id"&gt;&lt;/install&gt;
+    </code></pre>
+    <install installurl="https://amandabaker.github.io/pwa/web-install/index.html" manifestid="mismatched-manifest-id"></install>
 
     <!-- <h2>Install with custom info</h2>
     <p>Executes <code>navigator.install(manifest_id, install_url)</code> using:</p>
