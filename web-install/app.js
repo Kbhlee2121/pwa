@@ -218,6 +218,15 @@ if ('HTMLInstallElement' in window) {
     el.addEventListener('promptdismiss', (event) => {
       console.log(`${identifier} - promptdismiss:`, event);
     });
+
+    // Listen for validation status changes
+    el.addEventListener('validationstatuschange', (event) => {
+      console.log(`${identifier} - validationstatuschange:`, {
+        valid: event.target.valid,
+        invalidReason: event.target.invalidReason,
+        event: event
+      });
+    });
   });
 } else {
   console.warn('HTMLInstallElement not supported');
