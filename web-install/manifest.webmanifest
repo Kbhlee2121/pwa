@@ -6,6 +6,10 @@
   "theme_color": "#296f78",
   "icons": [
     {
+      "src": "32x32.png",
+      "sizes": "32x32"
+    },
+    {
       "src": "48x48.png",
       "sizes": "48x48"
     },
