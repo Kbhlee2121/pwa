@@ -149,6 +149,13 @@
     </code></pre>
     <button id="installTwoParamsUndefinedManifestId">Install (2 params)</button>
 
+    <pre><code>
+      let install_url = "https://www.hulu.com/app/?utm_source=a2hs";
+      let manifest_id = "https://www.hulu.com/app/?utm_source=a2hs";
+      await navigator.install(install_url, manifest_id);
+    </code></pre>
+    <button id="huluTest">Install (2 params)</button>
+
     <!-- requires #enable-experimental-web-platform-features -->
     <h1>Experimental</h1>
     <p>NOTE: For internal testing.</p>

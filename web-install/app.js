@@ -33,6 +33,7 @@ const installTwoParamsUndefinedManifestIdBtn = document.getElementById("installT
 // Edge Cases - Installing self with params
 const sameOriginOneParamBtn = document.getElementById("installSameOriginOneParam");
 const sameOriginTwoParamsBtn = document.getElementById("installSameOriginTwoParams");
+const huluTestBtn = document.getElementById("huluTest");
 
 // ------- HANDLER FUNCTIONS --------
 // Intended Use Cases
@@ -201,6 +202,18 @@ sameOriginTwoParamsBtn.addEventListener("click", async() => {
   } catch (err) {
     console.error(err);
   } 
+});
+
+huluTestBtn.addEventListener("click", async() => {
+  try {
+    let install_url = "https://www.hulu.com/app/?utm_source=a2hs";
+    let manifest_id = "https://www.hulu.com/app/?utm_source=a2hs";
+    await navigator.install(install_url, manifest_id).then((result) => {
+      console.log(result);
+    });
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 // <install> Element Cases
