@@ -225,21 +225,29 @@ if ('HTMLInstallElement' in window) {
     const identifier = `install-${index} (${installUrl})`;
     
     el.addEventListener('promptaction', (event) => {
-      console.log(`${identifier} - promptaction:`, event);
-    });
-    
-    el.addEventListener('promptdismiss', (event) => {
-      console.log(`${identifier} - promptdismiss:`, event);
-    });
-
-    // Listen for validation status changes
-    el.addEventListener('validationstatuschange', (event) => {
-      console.log(`${identifier} - validationstatuschange:`, {
+      console.log(`${identifier} - promptaction:`, {
         valid: event.target.valid,
         invalidReason: event.target.invalidReason,
         event: event
       });
     });
+    
+    el.addEventListener('promptdismiss', (event) => {
+      console.log(`${identifier} - promptdismiss:`, {
+        valid: event.target.valid,
+        invalidReason: event.target.invalidReason,
+        event: event
+      });
+    });
+
+    // Listen for validation status changes
+    el.onvalidationstatuschange = (event) => {
+      console.log(`${identifier} - validationstatuschange:`, {
+        valid: event.target.valid,
+        invalidReason: event.target.invalidReason,
+        event: event
+      });
+    };
   });
 } else {
   console.warn('HTMLInstallElement not supported');
