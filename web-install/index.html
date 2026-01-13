@@ -47,7 +47,7 @@
     </code></pre>
     <button id="installCrossOriginOneParam">Install (1 params)</button>
 
-    <h3>2 param, background doc, cross origin</h3>
+    <h3>2 param, background doc, cross origin (manifest has no `id`)</h3>
     <p>Executes:</p>
     <pre><code>
       let install_url = "https://diek.us/bubble/";
@@ -177,12 +177,6 @@
     </code></pre>
     <install installurl="https://diek.us/bubble/" manifestid="https://diek.us/bubble/index.html"></install>
 
-    <p>Executes:</p>
-    <pre><code>
-      &lt;install manifest="https://mustjab.github.io/"&gt;&lt;/install&gt;
-    </code></pre>
-    <install  manifest="https://mustjab.github.io/"></install>
-
     <h2 style="color:Tomato;">DataError cases - manifest id validation (install element)</h2>
 
     <h3>1 param, background doc, NO id in manifest</h3>
@@ -205,6 +199,23 @@
       &lt;install installurl="https://amandabaker.github.io/pwa/web-install/index.html" manifestid="mismatched-manifest-id"&gt;&lt;/install&gt;
     </code></pre>
     <install installurl="https://amandabaker.github.io/pwa/web-install/index.html" manifestid="mismatched-manifest-id"></install>
+
+    <h2 style="color:Tomato;">More Error Cases</h2>
+
+    <h3>2 params, background doc, invalid type for install url</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install installurl=12345 manifestid="https://diek.us/bubble/index.html"&gt;&lt;/install&gt;
+    </code></pre>
+    <install installurl=12345 manifestid="https://diek.us/bubble/index.html"></install>
+
+    <h3>2 params, background doc, invalid type for manifest id</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install installurl="https://diek.us/bubble/" manifestid=67890&gt;&lt;/install&gt;
+    </code></pre>
+    <install installurl="https://diek.us/bubble/" manifestid=67890></install>
+
 
     <!-- <h2>Install with custom info</h2>
     <p>Executes <code>navigator.install(manifest_id, install_url)</code> using:</p>
