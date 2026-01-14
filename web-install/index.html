@@ -216,6 +216,72 @@
     </code></pre>
     <install installurl="https://diek.us/bubble/" manifestid=67890></install>
 
+    <h3>2 params, background doc, variable is a number for install url</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;script&gt;const numUrl = 99999;&lt;/script&gt;
+      &lt;install id="installVarNumberUrl"&gt;&lt;/install&gt;
+      &lt;script&gt;document.getElementById('installVarNumberUrl').setAttribute('installurl', numUrl);&lt;/script&gt;
+    </code></pre>
+    <script>const numUrl = 99999;</script>
+    <install id="installVarNumberUrl" manifestid="https://diek.us/bubble/index.html"></install>
+    <script>document.getElementById('installVarNumberUrl').setAttribute('installurl', numUrl);</script>
+
+    <h3>2 params, background doc, variable is a number for manifest id</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;script&gt;const numManifest = 88888;&lt;/script&gt;
+      &lt;install id="installVarNumberManifest"&gt;&lt;/install&gt;
+      &lt;script&gt;document.getElementById('installVarNumberManifest').setAttribute('manifestid', numManifest);&lt;/script&gt;
+    </code></pre>
+    <script>const numManifest = 88888;</script>
+    <install id="installVarNumberManifest" installurl="https://diek.us/bubble/"></install>
+    <script>document.getElementById('installVarNumberManifest').setAttribute('manifestid', numManifest);</script>
+
+    <h3>2 params, background doc, variable is null for install url</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;script&gt;const nullUrl = null;&lt;/script&gt;
+      &lt;install id="installVarNullUrl"&gt;&lt;/install&gt;
+      &lt;script&gt;document.getElementById('installVarNullUrl').setAttribute('installurl', nullUrl);&lt;/script&gt;
+    </code></pre>
+    <script>const nullUrl = null;</script>
+    <install id="installVarNullUrl" manifestid="https://diek.us/bubble/index.html"></install>
+    <script>document.getElementById('installVarNullUrl').setAttribute('installurl', nullUrl);</script>
+
+    <h3>2 params, background doc, variable is null for manifest id</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;script&gt;const nullManifest = null;&lt;/script&gt;
+      &lt;install id="installVarNullManifest"&gt;&lt;/install&gt;
+      &lt;script&gt;document.getElementById('installVarNullManifest').setAttribute('manifestid', nullManifest);&lt;/script&gt;
+    </code></pre>
+    <script>const nullManifest = null;</script>
+    <install id="installVarNullManifest" installurl="https://diek.us/bubble/"></install>
+    <script>document.getElementById('installVarNullManifest').setAttribute('manifestid', nullManifest);</script>
+
+    <h3>2 params, background doc, variable is undefined for install url</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;script&gt;let undefinedUrl;&lt;/script&gt;
+      &lt;install id="installVarUndefinedUrl"&gt;&lt;/install&gt;
+      &lt;script&gt;document.getElementById('installVarUndefinedUrl').setAttribute('installurl', undefinedUrl);&lt;/script&gt;
+    </code></pre>
+    <script>let undefinedUrl;</script>
+    <install id="installVarUndefinedUrl" manifestid="https://diek.us/bubble/index.html"></install>
+    <script>document.getElementById('installVarUndefinedUrl').setAttribute('installurl', undefinedUrl);</script>
+
+    <h3>2 params, background doc, variable is undefined for manifest id</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;script&gt;let undefinedManifest;&lt;/script&gt;
+      &lt;install id="installVarUndefinedManifest"&gt;&lt;/install&gt;
+      &lt;script&gt;document.getElementById('installVarUndefinedManifest').setAttribute('manifestid', undefinedManifest);&lt;/script&gt;
+    </code></pre>
+    <script>let undefinedManifest;</script>
+    <install id="installVarUndefinedManifest" installurl="https://diek.us/bubble/"></install>
+    <script>document.getElementById('installVarUndefinedManifest').setAttribute('manifestid', undefinedManifest);</script>
+
 
     <!-- <h2>Install with custom info</h2>
     <p>Executes <code>navigator.install(manifest_id, install_url)</code> using:</p>
