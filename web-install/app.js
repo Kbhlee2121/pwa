@@ -226,7 +226,7 @@ if ('HTMLInstallElement' in window) {
     
     el.addEventListener('promptaction', (event) => {
       console.log(`${identifier} - promptaction:`, {
-        valid: event.target.valid,
+        valid: event.target.isValid,
         invalidReason: event.target.invalidReason,
         event: event
       });
@@ -234,7 +234,7 @@ if ('HTMLInstallElement' in window) {
     
     el.addEventListener('promptdismiss', (event) => {
       console.log(`${identifier} - promptdismiss:`, {
-        valid: event.target.valid,
+        valid: event.target.isValid,
         invalidReason: event.target.invalidReason,
         event: event
       });
@@ -243,7 +243,7 @@ if ('HTMLInstallElement' in window) {
     // Listen for validation status changes
     el.onvalidationstatuschange = (event) => {
       console.log(`${identifier} - validationstatuschange:`, {
-        valid: event.target.valid,
+        valid: event.target.isValid,
         invalidReason: event.target.invalidReason,
         event: event
       });
