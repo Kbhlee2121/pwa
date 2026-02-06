@@ -11,22 +11,21 @@
     <link rel="icon" href="./favicon.ico" />
   </head>
   <body>
- <!-- requires #enable-experimental-web-platform-features -->
     <h1>Install element test page</h1>
-    <p>Requires #enable-experimental-web-platform-features</p>
+    <p>Requires --enable-features=InstallElement</p>
 
     <p>Executes:</p>
     <pre><code>
       &lt;install&gt;&lt;/install&gt;
     </code></pre>
     <install></install>
-  
+
     <p>Executes:</p>
     <pre><code>
       &lt;install installurl="https://mustjab.github.io/"&gt;&lt;/install&gt;
     </code></pre>
     <install installurl="https://mustjab.github.io/"></install>
-  
+
     <p>Executes:</p>
     <pre><code>
       &lt;install installurl="https://diek.us/bubble/" manifestid="https://diek.us/bubble/index.html"&gt;&lt;/install&gt;
@@ -137,7 +136,7 @@
     <script>let undefinedManifest;</script>
     <install id="installVarUndefinedManifest" installurl="https://diek.us/bubble/"></install>
     <script>document.getElementById('installVarUndefinedManifest').setAttribute('manifestid', undefinedManifest);</script>
-    
+
     <script src="app.js"></script>
   </body>
 </html>
