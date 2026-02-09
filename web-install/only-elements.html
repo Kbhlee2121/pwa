@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <!-- vpython3 generate_token.py https://kbhlee2121.github.io/pwa/web-install WebAppInstallation -->
-    <!-- <meta http-equiv="origin-trial" content="Alse/AaFIs454cdVDvEFD9I4+KguH7X6S4OGB5V+q2+WFbYWOtRpSBokxf/7WswW3RTMrQJzAlDGnOJBnhpy4QoAAABzeyJvcmlnaW4iOiJodHRwczovL2tiaGxlZTIxMjEuZ2l0aHViLmlvOjQ0MyIsImZlYXR1cmUiOiJXZWJBcHBJbnN0YWxsYXRpb24iLCJleHBpcnkiOjE3ODM5ODcyMDAsImlzU3ViZG9tYWluIjp0cnVlfQ=="> -->
+    <!-- vpython3 generate_token.py https://kbhlee2121.github.io/pwa/web-install InstallElement -->
+    <meta http-equiv="origin-trial"
+      content="A4hnkAX6NZsyZuLL6zsY1SMUPxuizKy4HOFTbp92TMrWOQ+u7VKfTR2lgjlNB1kCqPaMywclJ0Pwy4ODTGScGQcAAABheyJvcmlnaW4iOiAiaHR0cHM6Ly9rYmhsZWUyMTIxLmdpdGh1Yi5pbzo0NDMiLCAiZmVhdHVyZSI6ICJJbnN0YWxsRWxlbWVudCIsICJleHBpcnkiOiAxNzc0MzA2NDg1fQ==">
     <title>Web Install Sample</title>
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="stylesheet" href="../style.css"/>
@@ -12,7 +13,7 @@
   </head>
   <body>
     <h1>Install element test page</h1>
-    <p>Requires --enable-features=InstallElement</p>
+    <p>Requires --enable-features=InstallElement, OR an origin trial header for InstallElement</p>
 
     <p>Executes:</p>
     <pre><code>
@@ -137,6 +138,6 @@
     <install id="installVarUndefinedManifest" installurl="https://diek.us/bubble/"></install>
     <script>document.getElementById('installVarUndefinedManifest').setAttribute('manifestid', undefinedManifest);</script>
 
-    <script src="app.js"></script>
+    <script src="elements-app.js"></script>
   </body>
 </html>
