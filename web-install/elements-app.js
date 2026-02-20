@@ -22,11 +22,19 @@ if ('HTMLInstallElement' in window) {
       });
     });
 
-    // Listen for validation status changes
+    // Listen for validation status changes.
     el.onvalidationstatuschange = (event) => {
       console.log(`${identifier} - validationstatuschange:`, {
         valid: event.target.isValid,
         invalidReason: event.target.invalidReason,
+        event: event
+      });
+    };
+
+    // Listen for install result.
+    el.oninstallresult = (event) => {
+      console.log(`${identifier} - installresult:`, {
+        installResult: event.target.installResult,
         event: event
       });
     };
