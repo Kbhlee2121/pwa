@@ -46,6 +46,7 @@ if ('HTMLInstallElement' in window) {
         event: event
       });
     };
+  });
 } else {
   console.warn('HTMLInstallElement not supported');
 }
