@@ -12,9 +12,14 @@
     <pre><code>
       let manifest_id = "https://kbhlee2121.github.io/pwa/web-install/index.html";
       let install_url = manifest_id;
-      navigator.install(manifest_id, install_url);
+      navigator.install(install_url, manifest_id);
     </code></pre>
     <button id="installSameOriginTwoParams">Install</button>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install installurl="https://mustjab.github.io/"&gt;&lt;/install&gt;
+    </code></pre>
+    <install installurl="https://mustjab.github.io/"></install>
   </body>
   <script src="app.js"></script>
 </html>
