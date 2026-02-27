@@ -142,7 +142,9 @@
     <script>document.getElementById('installVarUndefinedManifest').setAttribute('manifestid', undefinedManifest);</script>
 
     <button id="loadIframeBtn" type="button">Load iframe</button>
+    <button id="loadCrossOriginIframeBtn" type="button">Load cross-origin iframe</button>
     <div id="iframeHost"></div>
+    <div id="crossOriginIframeHost"></div>
     <script>
       const loadIframeBtn = document.getElementById('loadIframeBtn');
       const iframeHost = document.getElementById('iframeHost');
@@ -157,6 +159,21 @@
         iframe.width = 800;
         iframe.height = 800;
         iframeHost.appendChild(iframe);
+      });
+
+      const loadCrossOriginIframeBtn = document.getElementById('loadCrossOriginIframeBtn');
+      const crossOriginIframeHost = document.getElementById('crossOriginIframeHost');
+
+      loadCrossOriginIframeBtn.addEventListener('click', () => {
+        if (crossOriginIframeHost.querySelector('iframe')) {
+          return;
+        }
+
+        const iframe = document.createElement('iframe');
+        iframe.src = 'https://liahiscock.github.io/PWA/WebInstall/index.html';
+        iframe.width = 800;
+        iframe.height = 800;
+        crossOriginIframeHost.appendChild(iframe);
       });
     </script>
 
