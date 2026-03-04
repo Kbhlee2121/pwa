@@ -188,7 +188,7 @@
 
         const iframe = document.createElement('iframe');
         iframe.src = 'https://kbhlee2121.github.io/pwa/web-install/iframe.html';
-        iframe.setAttribute('sandbox', '');
+        iframe.setAttribute('sandbox', 'allow-scripts');
         iframe.width = 800;
         iframe.height = 800;
         sandboxedIframeHost.appendChild(iframe);
