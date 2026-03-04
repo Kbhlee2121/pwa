@@ -143,8 +143,10 @@
 
     <button id="loadIframeBtn" type="button">Load iframe</button>
     <button id="loadCrossOriginIframeBtn" type="button">Load cross-origin iframe</button>
+    <button id="loadSandboxedIframeBtn" type="button">Load sandboxed iframe</button>
     <div id="iframeHost"></div>
     <div id="crossOriginIframeHost"></div>
+    <div id="sandboxedIframeHost"></div>
     <script>
       const loadIframeBtn = document.getElementById('loadIframeBtn');
       const iframeHost = document.getElementById('iframeHost');
@@ -174,6 +176,22 @@
         iframe.width = 800;
         iframe.height = 800;
         crossOriginIframeHost.appendChild(iframe);
+      });
+
+      const loadSandboxedIframeBtn = document.getElementById('loadSandboxedIframeBtn');
+      const sandboxedIframeHost = document.getElementById('sandboxedIframeHost');
+
+      loadSandboxedIframeBtn.addEventListener('click', () => {
+        if (sandboxedIframeHost.querySelector('iframe')) {
+          return;
+        }
+
+        const iframe = document.createElement('iframe');
+        iframe.src = 'https://kbhlee2121.github.io/pwa/web-install/iframe.html';
+        iframe.setAttribute('sandbox', '');
+        iframe.width = 800;
+        iframe.height = 800;
+        sandboxedIframeHost.appendChild(iframe);
       });
     </script>
 
