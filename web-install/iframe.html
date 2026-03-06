@@ -31,7 +31,7 @@
 
     // Listen for validation status changes.
     document.getElementById("framedButton").onvalidationstatuschange = (event) => {
-      console.log(`${identifier} - validationstatuschange:`, {
+      console.log(`framedButton - validationstatuschange:`, {
         valid: event.target.isValid,
         invalidReason: event.target.invalidReason,
         event: event
