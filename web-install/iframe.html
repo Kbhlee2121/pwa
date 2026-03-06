@@ -14,12 +14,12 @@
       let install_url = manifest_id;
       navigator.install(install_url, manifest_id);
     </code></pre>
-    <button id="installSameOriginTwoParams">Install</button>
+    <button id="framedApi">Install</button>
     <p>Executes:</p>
     <pre><code>
       &lt;install installurl="https://mustjab.github.io/"&gt;&lt;/install&gt;
     </code></pre>
-    <install installurl="https://mustjab.github.io/" id="framedButton"></install>
+    <install installurl="https://mustjab.github.io/" id="framedElement"></install>
 
     <p>Executes:</p>
     <pre><code>
@@ -27,11 +27,35 @@
     </code></pre>
     <geolocation onlocation="console.log('Location updated');"></geolocation>
   </body>
-  <script src="app.js">
+  <script>
+    // Service worker registration.
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.register("./sw.js")
+        .then(() => console.log("Service worker registered"))
+        .catch((e) => console.log(`Registration failed: ${e}`));
+    }
+
+    // Feature detection.
+    if (!navigator.install) {
+      console.error("navigator.install is not available.");
+    }
+
+    // Same-origin with 2 params.
+    document.getElementById("framedApi").addEventListener("click", async () => {
+      try {
+        let manifest_id = "https://kbhlee2121.github.io/pwa/web-install/index.html";
+        let install_url = manifest_id;
+        await navigator.install(install_url, manifest_id).then((result) => {
+          console.log(result);
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    });
 
     // Listen for validation status changes.
-    document.getElementById("framedButton").onvalidationstatuschange = (event) => {
-      console.log(`framedButton - validationstatuschange:`, {
+    document.getElementById("framedElement").onvalidationstatuschange = (event) => {
+      console.log(`framedElement - validationstatuschange:`, {
         valid: event.target.isValid,
         invalidReason: event.target.invalidReason,
         event: event
