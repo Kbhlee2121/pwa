@@ -19,7 +19,7 @@
     <pre><code>
       &lt;install installurl="https://mustjab.github.io/"&gt;&lt;/install&gt;
     </code></pre>
-    <install installurl="https://mustjab.github.io/"></install>
+    <install installurl="https://mustjab.github.io/" id="framedButton"></install>
 
     <p>Executes:</p>
     <pre><code>
@@ -27,5 +27,15 @@
     </code></pre>
     <geolocation onlocation="console.log('Location updated');"></geolocation>
   </body>
-  <script src="app.js"></script>
+  <script src="app.js">
+
+    // Listen for validation status changes.
+    document.getElementById("framedButton").onvalidationstatuschange = (event) => {
+      console.log(`${identifier} - validationstatuschange:`, {
+        valid: event.target.isValid,
+        invalidReason: event.target.invalidReason,
+        event: event
+      });
+    };
+  </script>
 </html>
