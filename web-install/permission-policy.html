@@ -208,6 +208,18 @@ Permissions-Policy: web-app-installation=*
         topEl.addEventListener("installresult", (event) => {
           console.log("topLevelElement - installresult:", { result: event.result });
         });
+        topEl.addEventListener("promptaction", (event) => {
+          console.log("topLevelElement - promptaction:", {
+            valid: event.target.isValid,
+            invalidReason: event.target.invalidReason
+          });
+        });
+        topEl.addEventListener("promptdismiss", (event) => {
+          console.log("topLevelElement - promptdismiss:", {
+            valid: event.target.isValid,
+            invalidReason: event.target.invalidReason
+          });
+        });
       }
 
       // --- Helper to create iframes ---
