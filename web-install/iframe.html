@@ -7,12 +7,12 @@
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="stylesheet" href="../style.css"/>
   </head>
+  <body>
     <h2>kbhlee2121 iframe</h2>
     <p>Executes:</p>
     <pre><code>
-      let manifest_id = "https://kbhlee2121.github.io/pwa/web-install/index.html";
-      let install_url = manifest_id;
-      navigator.install(install_url, manifest_id);
+      let install_url = "https://mustjab.github.io/";
+      navigator.install(install_url);
     </code></pre>
     <button id="framedApi">Install</button>
     <p>Executes:</p>
@@ -26,15 +26,8 @@
       &lt;geolocation&gt;&lt;/geolocation&gt;
     </code></pre>
     <geolocation onlocation="console.log('Location updated');"></geolocation>
-  </body>
-  <script>
-    // Service worker registration.
-    if (navigator.serviceWorker) {
-      navigator.serviceWorker.register("./sw.js")
-        .then(() => console.log("Service worker registered"))
-        .catch((e) => console.log(`Registration failed: ${e}`));
-    }
 
+    <script>
     // Feature detection.
     if (!navigator.install) {
       console.error("navigator.install is not available.");
@@ -43,9 +36,8 @@
     // Same-origin with 2 params.
     document.getElementById("framedApi").addEventListener("click", async () => {
       try {
-        let manifest_id = "https://kbhlee2121.github.io/pwa/web-install/index.html";
-        let install_url = manifest_id;
-        await navigator.install(install_url, manifest_id).then((result) => {
+        let install_url = "https://mustjab.github.io/";
+        await navigator.install(install_url).then((result) => {
           console.log(result);
         });
       } catch (err) {
@@ -61,5 +53,6 @@
         event: event
       });
     };
-  </script>
+    </script>
+  </body>
 </html>

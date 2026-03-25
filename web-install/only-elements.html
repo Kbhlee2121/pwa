@@ -141,60 +141,6 @@
     <install id="installVarUndefinedManifest" installurl="https://diek.us/bubble/"></install>
     <script>document.getElementById('installVarUndefinedManifest').setAttribute('manifestid', undefinedManifest);</script>
 
-    <button id="loadIframeBtn" type="button">Load iframe</button>
-    <button id="loadCrossOriginIframeBtn" type="button">Load cross-origin iframe</button>
-    <button id="loadSandboxedIframeBtn" type="button">Load sandboxed iframe</button>
-    <div id="iframeHost"></div>
-    <div id="crossOriginIframeHost"></div>
-    <div id="sandboxedIframeHost"></div>
-    <script>
-      const loadIframeBtn = document.getElementById('loadIframeBtn');
-      const iframeHost = document.getElementById('iframeHost');
-
-      loadIframeBtn.addEventListener('click', () => {
-        if (iframeHost.querySelector('iframe')) {
-          return;
-        }
-
-        const iframe = document.createElement('iframe');
-        iframe.src = 'https://kbhlee2121.github.io/pwa/web-install/iframe.html';
-        iframe.width = 800;
-        iframe.height = 800;
-        iframeHost.appendChild(iframe);
-      });
-
-      const loadCrossOriginIframeBtn = document.getElementById('loadCrossOriginIframeBtn');
-      const crossOriginIframeHost = document.getElementById('crossOriginIframeHost');
-
-      loadCrossOriginIframeBtn.addEventListener('click', () => {
-        if (crossOriginIframeHost.querySelector('iframe')) {
-          return;
-        }
-
-        const iframe = document.createElement('iframe');
-        iframe.src = 'https://liahiscock.github.io/PWA/WebInstall/index.html';
-        iframe.width = 800;
-        iframe.height = 800;
-        crossOriginIframeHost.appendChild(iframe);
-      });
-
-      const loadSandboxedIframeBtn = document.getElementById('loadSandboxedIframeBtn');
-      const sandboxedIframeHost = document.getElementById('sandboxedIframeHost');
-
-      loadSandboxedIframeBtn.addEventListener('click', () => {
-        if (sandboxedIframeHost.querySelector('iframe')) {
-          return;
-        }
-
-        const iframe = document.createElement('iframe');
-        iframe.src = 'https://kbhlee2121.github.io/pwa/web-install/iframe.html';
-        iframe.setAttribute('sandbox', 'allow-scripts');
-        iframe.width = 800;
-        iframe.height = 800;
-        sandboxedIframeHost.appendChild(iframe);
-      });
-    </script>
-
     <script src="elements-app.js"></script>
   </body>
 </html>
