@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <!-- vpython3 generate_token.py https://kbhlee2121.github.io/pwa/web-install WebAppInstallation -->
+    <meta http-equiv="origin-trial"
+      content="Alse/AaFIs454cdVDvEFD9I4+KguH7X6S4OGB5V+q2+WFbYWOtRpSBokxf/7WswW3RTMrQJzAlDGnOJBnhpy4QoAAABzeyJvcmlnaW4iOiJodHRwczovL2tiaGxlZTIxMjEuZ2l0aHViLmlvOjQ0MyIsImZlYXR1cmUiOiJXZWJBcHBJbnN0YWxsYXRpb24iLCJleHBpcnkiOjE3ODM5ODcyMDAsImlzU3ViZG9tYWluIjp0cnVlfQ==">
+    <!-- vpython3 generate_token.py https://kbhlee2121.github.io/pwa/web-install InstallElement -->
+    <meta http-equiv="origin-trial"
+      content="A4hnkAX6NZsyZuLL6zsY1SMUPxuizKy4HOFTbp92TMrWOQ+u7VKfTR2lgjlNB1kCqPaMywclJ0Pwy4ODTGScGQcAAABheyJvcmlnaW4iOiAiaHR0cHM6Ly9rYmhsZWUyMTIxLmdpdGh1Yi5pbzo0NDMiLCAiZmVhdHVyZSI6ICJJbnN0YWxsRWxlbWVudCIsICJleHBpcnkiOiAxNzc0MzA2NDg1fQ==">
+    <title>Permission Policy - Web Install</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="../style.css"/>
+    <link rel="icon" href="./favicon.ico" />
+  </head>
+  <body>
+    <h1>Permission Policy Test Page</h1>
+    <p>
+      Tests how the <code>web-app-installation</code> Permissions Policy affects
+      <code>navigator.install()</code> and the <code>&lt;install&gt;</code> element
+      in various iframe configurations.
+    </p>
+    <p>
+      <a href="index.html">&larr; Back to main test page</a>
+    </p>
+
+    <h3>How Permissions Policy works:</h3>
+    <ul>
+      <li>By default, <code>web-app-installation</code> is allowed for <code>self</code> (the top-level document's origin).</li>
+      <li>Iframes must be explicitly granted the permission via the <code>allow</code> attribute on the <code>&lt;iframe&gt;</code> tag.</li>
+      <li>The <code>Permissions-Policy</code> HTTP header can restrict or grant the policy server-side, but GitHub Pages does not support custom headers, so we test the <code>allow</code> attribute approach here.</li>
+    </ul>
+
+    <!-- ======================================== -->
+    <!-- SECTION 1: Top-level (control) -->
+    <!-- ======================================== -->
+    <h2>1. Top-level page (control)</h2>
+    <p>These run directly in the top-level browsing context. Should always work.</p>
+
+    <h3>navigator.install() — 0 params (install self)</h3>
+    <pre><code>await navigator.install();</code></pre>
+    <button id="topLevelApi">Install (top-level API)</button>
+
+    <h3>&lt;install&gt; element — current page</h3>
+    <pre><code>&lt;install&gt;&lt;/install&gt;</code></pre>
+    <install id="topLevelElement"></install>
+
+    <!-- ======================================== -->
+    <!-- SECTION 2: Same-origin iframe tests -->
+    <!-- ======================================== -->
+    <h2 style="color:Tomato;">2. Same-origin iframes</h2>
+
+    <h3>2a. Same-origin iframe — NO <code>allow</code> attribute (default)</h3>
+    <p>Expected: <strong>Blocked</strong> — subframes do not inherit the permission by default.</p>
+    <pre><code>&lt;iframe src="iframe.html"&gt;&lt;/iframe&gt;</code></pre>
+    <button id="loadSameOriginNoAllow">Load iframe</button>
+    <div id="hostSameOriginNoAllow"></div>
+
+    <h3>2b. Same-origin iframe — WITH <code>allow="web-app-installation"</code></h3>
+    <p>Expected (with iframe support): <strong>Allowed</strong> — parent explicitly delegates the permission to same-origin child.</p>
+    <p>Expected (without iframe support): <strong>Blocked</strong> — delegation not supported.</p>
+    <pre><code>&lt;iframe src="iframe.html" allow="web-app-installation"&gt;&lt;/iframe&gt;</code></pre>
+    <button id="loadSameOriginWithAllow">Load iframe</button>
+    <div id="hostSameOriginWithAllow"></div>
+
+    <h3>2c. Same-origin iframe — <code>allow="web-app-installation 'none'"</code> (explicitly denied)</h3>
+    <p>Expected: <strong>Blocked</strong> — parent explicitly revokes the permission even for same-origin.</p>
+    <pre><code>&lt;iframe src="iframe.html" allow="web-app-installation 'none'"&gt;&lt;/iframe&gt;</code></pre>
+    <button id="loadSameOriginDenied">Load iframe</button>
+    <div id="hostSameOriginDenied"></div>
+
+    <h3>2d. Same-origin iframe — <code>allow="web-app-installation 'self'"</code></h3>
+    <p>Expected (with iframe support): <strong>Allowed</strong> — explicitly grants to self (the iframe's own origin, which matches the parent).</p>
+    <p>Expected (without iframe support): <strong>Blocked</strong> — delegation not supported.</p>
+    <pre><code>&lt;iframe src="iframe.html" allow="web-app-installation 'self'"&gt;&lt;/iframe&gt;</code></pre>
+    <button id="loadSameOriginAllowSelf">Load iframe</button>
+    <div id="hostSameOriginAllowSelf"></div>
+
+    <!-- ======================================== -->
+    <!-- SECTION 3: Cross-origin iframe tests -->
+    <!-- ======================================== -->
+    <h2 style="color:Tomato;">3. Cross-origin iframes</h2>
+
+    <h3>3a. Cross-origin iframe — NO <code>allow</code> attribute</h3>
+    <p>Expected: <strong>Blocked</strong> — cross-origin without delegation.</p>
+    <pre><code>&lt;iframe src="https://liahiscock.github.io/PWA/WebInstall/index.html"&gt;&lt;/iframe&gt;</code></pre>
+    <button id="loadCrossOriginNoAllow">Load iframe</button>
+    <div id="hostCrossOriginNoAllow"></div>
+
+    <h3>3b. Cross-origin iframe — WITH <code>allow="web-app-installation"</code></h3>
+    <p>Expected: Delegation attempted — behavior depends on whether cross-origin install delegation is supported.</p>
+    <pre><code>&lt;iframe src="https://liahiscock.github.io/PWA/WebInstall/index.html" allow="web-app-installation"&gt;&lt;/iframe&gt;</code></pre>
+    <button id="loadCrossOriginWithAllow">Load iframe</button>
+    <div id="hostCrossOriginWithAllow"></div>
+
+    <h3>3c. Cross-origin iframe — <code>allow="web-app-installation https://liahiscock.github.io"</code></h3>
+    <p>Expected: Delegation to specific origin — tests origin-scoped delegation.</p>
+    <pre><code>&lt;iframe src="https://liahiscock.github.io/PWA/WebInstall/index.html" allow="web-app-installation https://liahiscock.github.io"&gt;&lt;/iframe&gt;</code></pre>
+    <button id="loadCrossOriginScopedAllow">Load iframe</button>
+    <div id="hostCrossOriginScopedAllow"></div>
+
+    <!-- ======================================== -->
+    <!-- SECTION 4: Sandboxed iframe tests -->
+    <!-- ======================================== -->
+    <h2 style="color:Tomato;">4. Sandboxed iframes</h2>
+
+    <h3>4a. Sandboxed iframe — <code>sandbox="allow-scripts"</code>, no <code>allow</code></h3>
+    <p>Expected: <strong>Blocked</strong> — not supported.</p>
+    <pre><code>&lt;iframe src="iframe.html" sandbox="allow-scripts"&gt;&lt;/iframe&gt;</code></pre>
+    <button id="loadSandboxedNoAllow">Load iframe</button>
+    <div id="hostSandboxedNoAllow"></div>
+
+    <h3>4b. Sandboxed iframe — <code>sandbox="allow-scripts"</code> + <code>allow="web-app-installation"</code></h3>
+    <p>Expected: <strong>Blocked</strong> — not supported.</p>
+    <pre><code>&lt;iframe src="iframe.html" sandbox="allow-scripts" allow="web-app-installation"&gt;&lt;/iframe&gt;</code></pre>
+    <button id="loadSandboxedWithAllow">Load iframe</button>
+    <div id="hostSandboxedWithAllow"></div>
+
+    <h3>4c. Sandboxed iframe — <code>sandbox="allow-scripts allow-same-origin"</code> + <code>allow="web-app-installation"</code></h3>
+    <p>Expected: <strong>Blocked</strong> — not supported.</p>
+    <pre><code>&lt;iframe src="iframe.html" sandbox="allow-scripts allow-same-origin" allow="web-app-installation"&gt;&lt;/iframe&gt;</code></pre>
+    <button id="loadSandboxedSameOriginWithAllow">Load iframe</button>
+    <div id="hostSandboxedSameOriginWithAllow"></div>
+
+    <!-- ======================================== -->
+    <!-- SECTION 5: <install> element in iframes -->
+    <!-- ======================================== -->
+    <h2 style="color:Tomato;">5. &lt;install&gt; element in iframes</h2>
+    <p>The <code>&lt;install&gt;</code> element should obey the same permission policy as the API.</p>
+
+    <h3>5a. Same-origin iframe with &lt;install&gt; — no <code>allow</code></h3>
+    <p>Expected: <strong>Blocked</strong></p>
+    <button id="loadElementIframeNoAllow">Load iframe</button>
+    <div id="hostElementIframeNoAllow"></div>
+
+    <h3>5b. Same-origin iframe with &lt;install&gt; — WITH <code>allow="web-app-installation"</code></h3>
+    <p>Expected (with iframe support): <strong>Allowed</strong></p>
+    <p>Expected (without iframe support): <strong>Blocked</strong></p>
+    <pre><code>&lt;iframe src="iframe.html" allow="web-app-installation"&gt;&lt;/iframe&gt;</code></pre>
+    <button id="loadElementIframeWithAllow">Load iframe</button>
+    <div id="hostElementIframeWithAllow"></div>
+
+    <h3>5c. Cross-origin iframe with &lt;install&gt; — WITH <code>allow="web-app-installation"</code></h3>
+    <p>Expected: Delegation attempted — depends on cross-origin support.</p>
+    <button id="loadElementCrossOriginWithAllow">Load iframe</button>
+    <div id="hostElementCrossOriginWithAllow"></div>
+
+    <!-- ======================================== -->
+    <!-- SECTION 6: Notes on HTTP header -->
+    <!-- ======================================== -->
+    <h2>6. Permissions-Policy HTTP header (informational)</h2>
+    <p>
+      The <code>Permissions-Policy</code> HTTP response header can also control the policy at the server level. Examples:
+    </p>
+    <pre><code>
+// Disable for all contexts (including self):
+Permissions-Policy: web-app-installation=()
+
+// Allow for self only (default):
+Permissions-Policy: web-app-installation=(self)
+
+// Allow for self and a specific origin:
+Permissions-Policy: web-app-installation=(self "https://liahiscock.github.io")
+
+// Allow for all origins:
+Permissions-Policy: web-app-installation=*
+    </code></pre>
+    <p>
+      <strong>Note:</strong> GitHub Pages does not support custom HTTP response headers.
+      To test header-based policies, you would need a server you control (e.g., Express, Netlify with <code>_headers</code>,
+      Cloudflare Workers, or a local dev server).
+    </p>
+
+    <script>
+      // Service worker registration.
+      if (navigator.serviceWorker) {
+        navigator.serviceWorker.register("./sw.js")
+          .then(() => console.log("Service worker registered"))
+          .catch((e) => console.log(`Registration failed: ${e}`));
+      }
+
+      // Feature detection.
+      if (!navigator.install) {
+        console.warn("navigator.install is not available.");
+      }
+
+      // --- Top-level control tests ---
+
+      document.getElementById("topLevelApi").addEventListener("click", async () => {
+        try {
+          const result = await navigator.install();
+          console.log("Top-level API result:", result);
+        } catch (err) {
+          console.error("Top-level API error:", err);
+        }
+      });
+
+      // Top-level <install> element event listeners.
+      const topEl = document.getElementById("topLevelElement");
+      if (topEl) {
+        topEl.onvalidationstatuschange = (event) => {
+          console.log("topLevelElement - validationstatuschange:", {
+            valid: event.target.isValid,
+            invalidReason: event.target.invalidReason
+          });
+        };
+        topEl.addEventListener("installresult", (event) => {
+          console.log("topLevelElement - installresult:", { result: event.result });
+        });
+      }
+
+      // --- Helper to create iframes ---
+
+      const SAME_ORIGIN_SRC = "https://kbhlee2121.github.io/pwa/web-install/iframe.html";
+      const CROSS_ORIGIN_SRC = "https://liahiscock.github.io/PWA/WebInstall/index.html";
+      // iframe.html already contains both API button + <install> element,
+      // so it works for both API and element iframe tests.
+
+      function loadIframe(buttonId, hostId, src, attrs) {
+        document.getElementById(buttonId).addEventListener("click", () => {
+          const host = document.getElementById(hostId);
+          if (host.querySelector("iframe")) return;
+
+          const iframe = document.createElement("iframe");
+          iframe.src = src;
+          iframe.width = 800;
+          iframe.height = 400;
+
+          if (attrs) {
+            for (const [key, value] of Object.entries(attrs)) {
+              iframe.setAttribute(key, value);
+            }
+          }
+
+          host.appendChild(iframe);
+          console.log(`Loaded iframe in #${hostId}:`, {
+            src: src,
+            attributes: attrs || "(none)"
+          });
+        });
+      }
+
+      // --- Section 2: Same-origin iframes ---
+
+      loadIframe("loadSameOriginNoAllow", "hostSameOriginNoAllow",
+        SAME_ORIGIN_SRC, null);
+
+      loadIframe("loadSameOriginWithAllow", "hostSameOriginWithAllow",
+        SAME_ORIGIN_SRC, { "allow": "web-app-installation" });
+
+      loadIframe("loadSameOriginDenied", "hostSameOriginDenied",
+        SAME_ORIGIN_SRC, { "allow": "web-app-installation 'none'" });
+
+      loadIframe("loadSameOriginAllowSelf", "hostSameOriginAllowSelf",
+        SAME_ORIGIN_SRC, { "allow": "web-app-installation 'self'" });
+
+      // --- Section 3: Cross-origin iframes ---
+
+      loadIframe("loadCrossOriginNoAllow", "hostCrossOriginNoAllow",
+        CROSS_ORIGIN_SRC, null);
+
+      loadIframe("loadCrossOriginWithAllow", "hostCrossOriginWithAllow",
+        CROSS_ORIGIN_SRC, { "allow": "web-app-installation" });
+
+      loadIframe("loadCrossOriginScopedAllow", "hostCrossOriginScopedAllow",
+        CROSS_ORIGIN_SRC, { "allow": "web-app-installation https://liahiscock.github.io" });
+
+      // --- Section 4: Sandboxed iframes ---
+
+      loadIframe("loadSandboxedNoAllow", "hostSandboxedNoAllow",
+        SAME_ORIGIN_SRC, { "sandbox": "allow-scripts" });
+
+      loadIframe("loadSandboxedWithAllow", "hostSandboxedWithAllow",
+        SAME_ORIGIN_SRC, { "sandbox": "allow-scripts", "allow": "web-app-installation" });
+
+      loadIframe("loadSandboxedSameOriginWithAllow", "hostSandboxedSameOriginWithAllow",
+        SAME_ORIGIN_SRC, { "sandbox": "allow-scripts allow-same-origin", "allow": "web-app-installation" });
+
+      // --- Section 5: <install> element in iframes ---
+
+      loadIframe("loadElementIframeNoAllow", "hostElementIframeNoAllow",
+        SAME_ORIGIN_SRC, null);
+
+      loadIframe("loadElementIframeWithAllow", "hostElementIframeWithAllow",
+        SAME_ORIGIN_SRC, { "allow": "web-app-installation" });
+
+      loadIframe("loadElementCrossOriginWithAllow", "hostElementCrossOriginWithAllow",
+        CROSS_ORIGIN_SRC, { "allow": "web-app-installation" });
+    </script>
+  </body>
+</html>
