@@ -12,9 +12,11 @@
     <button id="loadIframeBtn" type="button">Load iframe</button>
     <button id="loadCrossOriginIframeBtn" type="button">Load cross-origin iframe</button>
     <button id="loadSandboxedIframeBtn" type="button">Load sandboxed iframe</button>
+    <button id="loadFencedFrameBtn" type="button">Load fenced frame</button>
     <div id="iframeHost"></div>
     <div id="crossOriginIframeHost"></div>
     <div id="sandboxedIframeHost"></div>
+    <div id="fencedFrameHost"></div>
 
     <script>
       const loadIframeBtn = document.getElementById('loadIframeBtn');
@@ -61,6 +63,22 @@
         iframe.width = 800;
         iframe.height = 800;
         sandboxedIframeHost.appendChild(iframe);
+      });
+
+      const loadFencedFrameBtn = document.getElementById('loadFencedFrameBtn');
+      const fencedFrameHost = document.getElementById('fencedFrameHost');
+
+      loadFencedFrameBtn.addEventListener('click', () => {
+        if (fencedFrameHost.querySelector('fencedframe')) {
+          return;
+        }
+
+        const fencedFrame = document.createElement('fencedframe');
+        const config = new FencedFrameConfig('https://kbhlee2121.github.io/pwa/web-install/index.html');
+        fencedFrame.config = config;
+        fencedFrame.width = 800;
+        fencedFrame.height = 800;
+        fencedFrameHost.appendChild(fencedFrame);
       });
     </script>
   </body>
