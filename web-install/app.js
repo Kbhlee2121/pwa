@@ -66,7 +66,7 @@ crossOriginParamsTwoParamsBtn.addEventListener("click", async() => {
   try {
     // Make sure to update the visible code sample in index.html when updating
     // this.
-    let manifest_id = "https://diek.us/bubble/index.html";
+    let manifest_id = "https://diek.us/bubble/";
     let install_url = "https://diek.us/bubble/";
     await navigator.install(install_url, manifest_id).then((result) => {
       console.log(result);
@@ -156,7 +156,7 @@ installOneParamInvalidUrlBtn.addEventListener("click", async() => {
 installTwoParamsUndefinedUrlBtn.addEventListener("click", async() => {
   try {
     let install_url;
-    let manifest_id = "https://diek.us/bubble/index.html";
+    let manifest_id = "https://diek.us/bubble/";
     await navigator.install(install_url, manifest_id).then((result) => {
       console.log(result);
     });
