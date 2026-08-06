@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <!-- navigator.install OT token -->
+    <meta http-equiv="origin-trial" content="Alse/AaFIs454cdVDvEFD9I4+KguH7X6S4OGB5V+q2+WFbYWOtRpSBokxf/7WswW3RTMrQJzAlDGnOJBnhpy4QoAAABzeyJvcmlnaW4iOiJodHRwczovL2tiaGxlZTIxMjEuZ2l0aHViLmlvOjQ0MyIsImZlYXR1cmUiOiJXZWJBcHBJbnN0YWxsYXRpb24iLCJleHBpcnkiOjE3ODM5ODcyMDAsImlzU3ViZG9tYWluIjp0cnVlfQ==">
+    <!-- install element OT token -->
+    <meta http-equiv="origin-trial" content="Au26xfR8ABieV7zd1TYQhVCXwHaArls+XUkYbZGTCRpIy6jE3hFNANXVrG14V1iy4QYkbes2CNzrY7qQnbK1VwgAAABveyJvcmlnaW4iOiJodHRwczovL2tiaGxlZTIxMjEuZ2l0aHViLmlvOjQ0MyIsImZlYXR1cmUiOiJJbnN0YWxsRWxlbWVudCIsImV4cGlyeSI6MTc5MTI0NDgwMCwiaXNTdWJkb21haW4iOnRydWV9">
+    <title>Web Install Sample</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="../style.css"/>
+    <link rel="icon" href="./favicon.ico" />
+  </head>
+  <body>
+    <h1>Web Install Sample</h1>
+    <h2>Manifest-first installs!</h2>
+    <p>
+      A test app and debugging tool for the Web Install API, navigator.install(). See more info in the
+      <a
+        href="https://github.com/MicrosoftEdge/MSEdgeExplainers/blob/main/WebInstall/explainer.md"
+        >Explainer</a>.
+    </p>
+    <p>
+      We'd love to hear your feedback! To share feedback, please create a
+      <a href="https://github.com/MicrosoftEdge/MSEdgeExplainers/issues/new?template=web-install-api.md">GitHub issue</a>.
+    </p>
+    <p>
+      *Requires --enable-features=WebAppInstallation (or about://flags/#web-app-installation-api)
+    </p>
+    <h3>Notes:</h3>
+    <p>
+      Current document installs = installing the current page.
+    </p>
+    <p>
+      Background document installs = installing anything else that's not the current page.
+    </p>
+
+    <h3>Looking for the element version? &lt;install&gt;</h3>
+    <p>
+      See this <a href="only-elements.html">test page*</a>
+      <br><br>
+      *Requires --enable-features=InstallElement (or about://flags/#web-app-install-element) OR an origin trial meta header
+      for InstallElement*
+    </p>
+
+    <h3>Testing Permission Policy behavior?</h3>
+    <p>
+      See the <a href="permission-policy.html">Permission Policy test page</a>
+    </p>
+
+    <h2 style="color:Tomato;">Intended use cases</h2>
+
+    <h3>Current doc, no args (manifest has `id`)</h3>
+    <p>Executes:</p>
+    <pre><code>
+      navigator.install();
+    </code></pre>
+    <button id="installSameOriginZeroParams">Install (current doc)</button>
+
+    <h3>Background doc, cross origin, manifest only (manifest has `id`)</h3>
+    <p>Executes:</p>
+    <pre><code>
+      navigator.install({
+        manifest: "https://mustjab.github.io/manifest.json",
+      });
+    </code></pre>
+    <button id="installCrossOriginOneParam">Install (manifest)</button>
+
+    <h3>Background doc, cross origin, manifest + manifestId (manifest has no `id`)</h3>
+    <p>Executes:</p>
+    <pre><code>
+      navigator.install({
+        manifest: "https://diek.us/bubble/manifest.json",
+        manifestId: "https://diek.us/bubble/",
+      });
+    </code></pre>
+    <button id="installCrossOriginTwoParams">Install (manifest + manifestId)</button>
+
+    <h3>Background doc, cross origin, with screenshots</h3>
+    <p>*Note - screenshots not yet supported</p>
+    <p>Executes:</p>
+    <pre><code>
+      navigator.install({
+        manifest: "https://squoosh.app/manifest.json",
+        manifestId: "https://squoosh.app/?utm_medium=PWA&utm_source=launcher",
+      });
+    </code></pre>
+    <button id="installCrossOriginScreenshots">Install (manifest + manifestId)</button>
+
+    <h2 style="color:Tomato;">Edge case - installing self with params</h2>
+    <p>*Note - Although the end result is the same ('foo' site installs itself), passing parameters like this will launch the foo app in a new window, preserving the 'foo' tab in the main browser window. </p>
+    <h3>Install self, manifest only</h3>
+    <p>Executes:</p>
+    <pre><code>
+      navigator.install({
+        manifest: "https://kbhlee2121.github.io/pwa/web-install/manifest.webmanifest",
+      });
+    </code></pre>
+    <button id="installSameOriginOneParam">Install (manifest)</button>
+
+    <h3>Install self, manifest + manifestId</h3>
+    <p>Executes:</p>
+    <pre><code>
+      navigator.install({
+        manifest: "https://kbhlee2121.github.io/pwa/web-install/manifest.webmanifest",
+        manifestId: "https://kbhlee2121.github.io/WebInstallSample",
+      });
+    </code></pre>
+    <button id="installSameOriginTwoParams">Install (manifest + manifestId)</button>
+
+    <h2 style="color:Tomato;">DataError cases - manifest id validation</h2>
+
+    <h3>Background doc, NO id in manifest, manifestId omitted</h3>
+    <p>Executes:</p>
+    <pre><code>
+      navigator.install({
+        manifest: "https://amandabaker.github.io/pwa/web-install/manifest.webmanifest",
+      });
+    </code></pre>
+    <button id="installOneParamNoDefinedId">Install (manifest)</button>
+
+    <h3>Background doc, YES id in manifest, mismatched manifestId</h3>
+    <p>Executes:</p>
+    <pre><code>
+      navigator.install({
+        manifest: "https://mustjab.github.io/manifest.json",
+        manifestId: "mismatched-manifest-id",
+      });
+    </code></pre>
+    <button id="installTwoParamsMismatchedDefinedId">Install (manifest + manifestId)</button>
+
+    <h3>Background doc, NO id in manifest, mismatched manifestId</h3>
+    <p>Executes:</p>
+    <pre><code>
+      navigator.install({
+        manifest: "https://amandabaker.github.io/pwa/web-install/manifest.webmanifest",
+        manifestId: "mismatched-manifest-id",
+      });
+    </code></pre>
+    <button id="installTwoParamsMismatchedNoDefinedId">Install (manifest + manifestId)</button>
+
+    <h2 style="color:Tomato;">V8 TypeError - bad JS input</h2>
+
+    <h3>Undefined manifest</h3>
+    <p>Executes:</p>
+    <pre><code>
+      navigator.install({
+        manifest: undefined,
+      });
+    </code></pre>
+    <button id="installOneParamUndefined">Install (undefined manifest)</button>
+
+    <h3>Invalid manifest URL</h3>
+    <p>Executes:</p>
+    <pre><code>
+      navigator.install({
+        manifest: "badurl",
+      });
+    </code></pre>
+    <button id="installOneParamInvalidUrl">Install (invalid URL)</button>
+
+    <h3>Undefined manifest, defined manifestId</h3>
+    <p>Executes:</p>
+    <pre><code>
+      navigator.install({
+        manifest: undefined,
+        manifestId: "https://diek.us/bubble/",
+      });
+    </code></pre>
+    <button id="installTwoParamsUndefinedUrl">Install (undefined manifest)</button>
+
+    <h3>Defined manifest, undefined manifestId</h3>
+    <p>Executes:</p>
+    <pre><code>
+      navigator.install({
+        manifest: "https://kbhlee2121.github.io/pwa/web-install/manifest.webmanifest",
+        manifestId: undefined,
+      });
+    </code></pre>
+    <button id="installTwoParamsUndefinedManifestId">Install (undefined manifestId)</button>
+
+    <pre><code>
+      navigator.install({
+        manifest: "https://www.hulu.com/app/manifest.json",
+        manifestId: "https://www.hulu.com/app/?utm_source=a2hs",
+      });
+    </code></pre>
+    <button id="huluTest">Install (manifest + manifestId)</button>
+
+    <!-- <h2>Install with custom info</h2>
+    <p>Executes <code>navigator.install({ manifest, manifestId })</code> using:</p>
+    <p><code>manifest = </code><input></p>
+    <p><code>manifestId = </code><input></p>
+    <button id="installCustom">Install</button> -->
+
+    <!-- <div> -->
+      <!-- <iframe src="https://kbhlee2121.github.io/pwa/web-install/iframe.html"
+              height="700px"></iframe> -->
+    <!-- </div> -->
+  </body>
+  <script src="app.js"></script>
+</html>

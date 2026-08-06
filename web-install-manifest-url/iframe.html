@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+     <!-- navigator.install OT token -->
+    <meta http-equiv="origin-trial" content="Alse/AaFIs454cdVDvEFD9I4+KguH7X6S4OGB5V+q2+WFbYWOtRpSBokxf/7WswW3RTMrQJzAlDGnOJBnhpy4QoAAABzeyJvcmlnaW4iOiJodHRwczovL2tiaGxlZTIxMjEuZ2l0aHViLmlvOjQ0MyIsImZlYXR1cmUiOiJXZWJBcHBJbnN0YWxsYXRpb24iLCJleHBpcnkiOjE3ODM5ODcyMDAsImlzU3ViZG9tYWluIjp0cnVlfQ==">
+    <!-- install element OT token -->
+    <meta http-equiv="origin-trial" content="Au26xfR8ABieV7zd1TYQhVCXwHaArls+XUkYbZGTCRpIy6jE3hFNANXVrG14V1iy4QYkbes2CNzrY7qQnbK1VwgAAABveyJvcmlnaW4iOiJodHRwczovL2tiaGxlZTIxMjEuZ2l0aHViLmlvOjQ0MyIsImZlYXR1cmUiOiJJbnN0YWxsRWxlbWVudCIsImV4cGlyeSI6MTc5MTI0NDgwMCwiaXNTdWJkb21haW4iOnRydWV9">
+    <title>Web Install Sample in an IFrame</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="../style.css"/>
+  </head>
+  <body>
+    <h2>kbhlee2121 iframe</h2>
+    <p>Executes:</p>
+    <pre><code>
+      let manifest = "https://mustjab.github.io/manifest.json";
+      navigator.install({ manifest });
+    </code></pre>
+    <button id="framedApi">Install</button>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install manifest="https://mustjab.github.io/manifest.json"&gt;&lt;/install&gt;
+    </code></pre>
+    <install manifest="https://mustjab.github.io/manifest.json" id="framedElement"></install>
+
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install&gt;&lt;/install&gt;
+    </code></pre>
+    <install id="framedCurrentDoc"></install>
+
+    <p>Executes (Installing self with params):</p>
+    <pre><code>
+      &lt;install manifest="https://kbhlee2121.github.io/pwa/web-install/manifest.webmanifest"&gt;&lt;/install&gt;
+    </code></pre>
+    <install manifest="https://kbhlee2121.github.io/pwa/web-install/manifest.webmanifest" id="framedSelfElement"></install>
+
+    <p>Executes:</p>
+    <pre><code>
+      &lt;geolocation&gt;&lt;/geolocation&gt;
+    </code></pre>
+    <geolocation onlocation="console.log('Location updated');"></geolocation>
+
+    <script>
+    // Feature detection.
+    if (!navigator.install) {
+      console.error("navigator.install is not available.");
+    }
+
+    // Same-origin with 2 params.
+    document.getElementById("framedApi").addEventListener("click", async () => {
+      try {
+        let manifest = "https://mustjab.github.io/manifest.json";
+        await navigator.install({ manifest }).then((result) => {
+          console.log(result);
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    });
+
+    // Listen for the install result.
+    document.getElementById("framedElement").addEventListener("installresult", (event) => {
+      console.log(`framedElement - installresult:`, {
+        result: event.result,
+        event: event
+      });
+    });
+  </script>
+  <script src="elements-app.js"></script>
+</html>
