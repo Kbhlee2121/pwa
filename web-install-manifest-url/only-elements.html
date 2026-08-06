@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <!-- install element OT token -->
+    <meta http-equiv="origin-trial" content="Au26xfR8ABieV7zd1TYQhVCXwHaArls+XUkYbZGTCRpIy6jE3hFNANXVrG14V1iy4QYkbes2CNzrY7qQnbK1VwgAAABveyJvcmlnaW4iOiJodHRwczovL2tiaGxlZTIxMjEuZ2l0aHViLmlvOjQ0MyIsImZlYXR1cmUiOiJJbnN0YWxsRWxlbWVudCIsImV4cGlyeSI6MTc5MTI0NDgwMCwiaXNTdWJkb21haW4iOnRydWV9">
+    <title>Web Install Sample</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="../style.css"/>
+    <link rel="icon" href="./favicon.ico" />
+  </head>
+  <body>
+    <h1>Install element test page</h1>
+    <h2>Manifest-first installs!</h2>
+    <p>Requires --enable-features=InstallElement, <br>OR enabling about://flags/#web-app-install-element,<br> OR an origin
+      trial
+      header for
+      InstallElement</p>
+    <p>
+      A test app and debugging tool for the declarative version of the Web Install API,  &lt;install&gt; element. See more info in the
+      <a
+        href="https://github.com/WICG/install-element/blob/main/explainer-manifest-url.md"
+        >Explainer</a>.
+    </p>
+    <p>
+      We'd love to hear your feedback! To share feedback, please create a
+      <a href="https://github.com/WICG/install-element/issues/new?template=install-element-ot-feedback.md">GitHub issue</a>.
+    </p>
+
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install&gt;&lt;/install&gt;
+    </code></pre>
+    <install></install>
+
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install manifest="https://mustjab.github.io/manifest.json"&gt;&lt;/install&gt;
+    </code></pre>
+    <install manifest="https://mustjab.github.io/manifest.json"></install>
+
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install manifest="https://diek.us/bubble/manifest.json" manifestid="https://diek.us/bubble/"&gt;&lt;/install&gt;
+    </code></pre>
+    <install manifest="https://diek.us/bubble/manifest.json" manifestid="https://diek.us/bubble/"></install>
+
+    <h2 style="color:Tomato;">DataError cases - manifest id validation (install element)</h2>
+
+    <h3>1 param, background doc, NO id in manifest</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install manifest="https://amandabaker.github.io/pwa/web-install/manifest.webmanifest"&gt;&lt;/install&gt;
+    </code></pre>
+    <install manifest="https://amandabaker.github.io/pwa/web-install/manifest.webmanifest"></install>
+
+    <h3>2 params, background doc, YES id in manifest, mismatched input</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install manifest="https://mustjab.github.io/manifest.json" manifestid="mismatched-manifest-id"&gt;&lt;/install&gt;
+    </code></pre>
+    <install manifest="https://mustjab.github.io/manifest.json" manifestid="mismatched-manifest-id"></install>
+
+    <h3>2 params, background doc, NO id in manifest, mismatched input</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install manifest="https://amandabaker.github.io/pwa/web-install/manifest.webmanifest" manifestid="mismatched-manifest-id"&gt;&lt;/install&gt;
+    </code></pre>
+    <install manifest="https://amandabaker.github.io/pwa/web-install/manifest.webmanifest" manifestid="mismatched-manifest-id"></install>
+
+    <h2 style="color:Tomato;">More Error Cases</h2>
+
+    <h3>2 params, background doc, invalid type for install url</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install manifest=12345 manifestid="https://diek.us/bubble/"&gt;&lt;/install&gt;
+    </code></pre>
+    <install manifest=12345 manifestid="https://diek.us/bubble/"></install>
+
+    <h3>2 params, background doc, invalid type for manifest id</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install manifest="https://diek.us/bubble/manifest.json" manifestid=67890&gt;&lt;/install&gt;
+    </code></pre>
+    <install manifest="https://diek.us/bubble/manifest.json" manifestid=67890></install>
+
+    <h3>2 params, background doc, variable is a number for install url</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;script&gt;const numUrl = 99999;&lt;/script&gt;
+      &lt;install id="installVarNumberUrl" manifestid="https://diek.us/bubble/"&gt;&lt;/install&gt;
+      &lt;script&gt;document.getElementById('installVarNumberUrl').setAttribute('manifest', numUrl);&lt;/script&gt;
+    </code></pre>
+    <script>const numUrl = 99999;</script>
+    <install id="installVarNumberUrl" manifestid="https://diek.us/bubble/"></install>
+    <script>document.getElementById('installVarNumberUrl').setAttribute('manifest', numUrl);</script>
+
+    <h3>2 params, background doc, variable is a number for manifest id</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;script&gt;const numManifest = 88888;&lt;/script&gt;
+      &lt;install id="installVarNumberManifest" manifest="https://diek.us/bubble/manifest.json"&gt;&lt;/install&gt;
+      &lt;script&gt;document.getElementById('installVarNumberManifest').setAttribute('manifestid', numManifest);&lt;/script&gt;
+    </code></pre>
+    <script>const numManifest = 88888;</script>
+    <install id="installVarNumberManifest" manifest="https://diek.us/bubble/manifest.json"></install>
+    <script>document.getElementById('installVarNumberManifest').setAttribute('manifestid', numManifest);</script>
+
+    <h3>2 params, background doc, variable is null for install url</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;script&gt;const nullUrl = null;&lt;/script&gt;
+      &lt;install id="installVarNullUrl" manifestid="https://diek.us/bubble/"&gt;&lt;/install&gt;
+      &lt;script&gt;document.getElementById('installVarNullUrl').setAttribute('manifest', nullUrl);&lt;/script&gt;
+    </code></pre>
+    <script>const nullUrl = null;</script>
+    <install id="installVarNullUrl" manifestid="https://diek.us/bubble/"></install>
+    <script>document.getElementById('installVarNullUrl').setAttribute('manifest', nullUrl);</script>
+
+    <h3>2 params, background doc, variable is null for manifest id</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;script&gt;const nullManifest = null;&lt;/script&gt;
+      &lt;install id="installVarNullManifest" manifest="https://diek.us/bubble/manifest.json"&gt;&lt;/install&gt;
+      &lt;script&gt;document.getElementById('installVarNullManifest').setAttribute('manifestid', nullManifest);&lt;/script&gt;
+    </code></pre>
+    <script>const nullManifest = null;</script>
+    <install id="installVarNullManifest" manifest="https://diek.us/bubble/manifest.json"></install>
+    <script>document.getElementById('installVarNullManifest').setAttribute('manifestid', nullManifest);</script>
+
+    <h3>2 params, background doc, variable is undefined for install url</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;script&gt;let undefinedUrl;&lt;/script&gt;
+      &lt;install id="installVarUndefinedUrl" manifestid="https://diek.us/bubble/"&gt;&lt;/install&gt;
+      &lt;script&gt;document.getElementById('installVarUndefinedUrl').setAttribute('manifest', undefinedUrl);&lt;/script&gt;
+    </code></pre>
+    <script>let undefinedUrl;</script>
+    <install id="installVarUndefinedUrl" manifestid="https://diek.us/bubble/"></install>
+    <script>document.getElementById('installVarUndefinedUrl').setAttribute('manifest', undefinedUrl);</script>
+
+    <h3>2 params, background doc, variable is undefined for manifest id</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;script&gt;let undefinedManifest;&lt;/script&gt;
+      &lt;install id="installVarUndefinedManifest" manifest="https://diek.us/bubble/manifest.json"&gt;&lt;/install&gt;
+      &lt;script&gt;document.getElementById('installVarUndefinedManifest').setAttribute('manifestid', undefinedManifest);&lt;/script&gt;
+    </code></pre>
+    <script>let undefinedManifest;</script>
+    <install id="installVarUndefinedManifest" manifest="https://diek.us/bubble/manifest.json"></install>
+    <script>document.getElementById('installVarUndefinedManifest').setAttribute('manifestid', undefinedManifest);</script>
+
+    <script src="elements-app.js"></script>
+  </body>
+</html>
