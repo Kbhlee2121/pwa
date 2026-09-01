@@ -1,0 +1,5 @@
+{
+  "id": "./start-url-invalid",
+  "name": "Invalid start URL test app",
+  "start_url": "https://example.com/outside-manifest-origin"
+}

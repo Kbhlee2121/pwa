@@ -1,0 +1,12 @@
+{
+  "name": "Missing ID test app",
+  "short_name": "Missing ID",
+  "start_url": "./missing-id-app/",
+  "icons": [
+    {
+      "src": "./icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
