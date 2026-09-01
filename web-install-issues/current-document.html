@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Current-document Web Install scenario</title>
+    <link rel="stylesheet" href="../style.css" />
+    <style>
+      :root { color-scheme: light dark; }
+      main { max-width: 60rem; }
+      button, install { display: block; margin: 1rem 0; }
+      install { min-height: 2.5rem; }
+      output {
+        border: 1px solid ButtonBorder;
+        display: block;
+        min-height: 3rem;
+        padding: 0.75rem;
+        white-space: pre-wrap;
+      }
+      .expected {
+        border: 1px solid ButtonBorder;
+        border-radius: 0.5rem;
+        padding: 0.75rem 1rem;
+      }
+      dt { font-weight: 700; }
+      dd { margin: 0 0 0.5rem 0; }
+      code {
+        background: CanvasText;
+        border-radius: 0.2rem;
+        color: Canvas;
+        padding: 0.1rem 0.3rem;
+      }
+      .pill {
+        display: inline-block;
+        border: 1px solid ButtonBorder;
+        border-radius: 999px;
+        padding: 0.1rem 0.6rem;
+        font-size: 0.85em;
+      }
+    </style>
+    <script>
+      // Cross-origin manifest URL used to demonstrate that current-document
+      // Web Install Issues are suppressed when the linked manifest is on a
+      // different origin. The manifest body is irrelevant here: the fetch is
+      // blocked by CORS and its contents never enter the Web Install pipeline.
+      const CROSS_ORIGIN_MANIFEST_URL =
+        "https://microsoftedge.github.io/Demos/pwa-install-api/manifest.json";
+
+      const scenarios = {
+        "no-manifest": {
+          label: "No manifest",
+          manifest: null,
+          issue: "No manifest detected",
+          resourceRelative: null,
+          otherIssues: "None expected.",
+        },
+        "malformed": {
+          label: "Malformed manifest",
+          manifest: "./fixtures/malformed.webmanifest",
+          issue: "Manifest could not be fetched, is empty, or could not be parsed",
+          resourceRelative: "./fixtures/malformed.webmanifest",
+          otherIssues: "None expected.",
+        },
+        "missing-id": {
+          label: "Missing manifest ID",
+          manifest: "./fixtures/missing-id.webmanifest",
+          issue: "Manifest does not contain an `id` field",
+          resourceRelative: "./fixtures/missing-id.webmanifest",
+          otherIssues: "None expected.",
+        },
+        "start-url-invalid": {
+          label: "Invalid start URL",
+          manifest: "./fixtures/start-url-invalid.webmanifest",
+          issue: "Manifest 'start_url' is not valid",
+          resourceRelative: "./fixtures/start-url-invalid.webmanifest",
+          otherIssues: "None expected.",
+        },
+        "missing-name": {
+          label: "Missing name and short_name",
+          manifest: "./fixtures/missing-name.webmanifest",
+          issue: "Manifest does not contain a 'name' or 'short_name' field",
+          resourceRelative: "./fixtures/missing-name.webmanifest",
+          otherIssues: "None expected.",
+        },
+        "cross-origin": {
+          label: "Cross-origin manifest (CORS-blocked)",
+          manifest: CROSS_ORIGIN_MANIFEST_URL,
+          issue: "No Web Install Issue (suppressed for cross-origin linked manifests)",
+          resourceRelative: null,
+          resourceAbsolute: CROSS_ORIGIN_MANIFEST_URL,
+          otherIssues:
+            "A CORS Issue from the manifest fetch is expected and may appear before you click. The remote manifest is never actually consumed — CORS blocks the fetch — so its body does not affect this scenario.",
+          crossOrigin: true,
+        },
+      };
+
+      const scenarioName =
+        new URLSearchParams(location.search).get("scenario") ?? "no-manifest";
+      const scenario = scenarios[scenarioName] ?? scenarios["no-manifest"];
+
+      if (scenario.manifest) {
+        const link = document.createElement("link");
+        link.rel = "manifest";
+        link.href = scenario.manifest;
+        document.head.append(link);
+      }
+    </script>
+  </head>
+  <body>
+    <p><a href="./index.html">← All scenarios</a></p>
+    <main>
+      <p class="pill" id="scenario-pill">Scenario: <span id="scenario-name"></span></p>
+      <h1 id="scenario-title"></h1>
+
+      <section class="expected" aria-labelledby="expected-heading">
+        <h2 id="expected-heading">Expected behavior</h2>
+        <dl>
+          <dt>Web Install Issue</dt>
+          <dd id="expected-issue"></dd>
+          <dt>Manifest URL / affected request</dt>
+          <dd id="expected-resource"></dd>
+          <dt><code>navigator.install()</code> result</dt>
+          <dd><code>DataError</code></dd>
+          <dt>Untargeted <code>&lt;install&gt;</code> result</dt>
+          <dd><code>invalid_data</code></dd>
+          <dt>Other Issues</dt>
+          <dd id="expected-other-issues"></dd>
+        </dl>
+      </section>
+
+      <p>
+        Requires <code>about://flags/#web-app-installation-api</code> and
+        <code>about://flags/#web-app-install-element</code> both Enabled
+        (restart the browser after toggling).
+      </p>
+      <p>
+        Open DevTools Issues first. Test one entry point, then
+        <strong>reload this page</strong> before testing the other so identical
+        Issues are not deduplicated.
+      </p>
+
+      <h2>Zero-parameter <code>navigator.install()</code></h2>
+      <button id="navigator-install" type="button">Run navigator.install()</button>
+
+      <h2>Untargeted <code>&lt;install&gt;</code></h2>
+      <p>Click this rendered install control:</p>
+      <install id="current-document-install"></install>
+
+      <h2>Latest page-visible result</h2>
+      <output id="result" aria-live="polite">No test run yet.</output>
+
+      <section id="cross-origin-note" hidden>
+        <h2>Cross-origin manifest</h2>
+        <p>
+          This scenario links to <code id="xorigin-url"></code>, which is on a
+          different origin from this page. The CORS Issue that appears is the
+          browser blocking the manifest fetch itself; the remote manifest is
+          never consumed by the Web Install pipeline, so whether it is valid
+          or malformed does not matter for this scenario. What is being
+          verified is only the <em>absence</em> of a Web Install Issue on the
+          current-document path.
+        </p>
+      </section>
+    </main>
+
+    <script>
+      const result = document.querySelector("#result");
+      document.querySelector("#scenario-name").textContent = scenarioName;
+      document.querySelector("#scenario-title").textContent = scenario.label;
+      document.querySelector("#expected-issue").textContent = scenario.issue;
+
+      const resourceDd = document.querySelector("#expected-resource");
+      if (scenario.resourceRelative) {
+        resourceDd.textContent = new URL(scenario.resourceRelative, location.href).href;
+      } else if (scenario.resourceAbsolute) {
+        resourceDd.textContent = scenario.resourceAbsolute;
+      } else {
+        resourceDd.textContent = "No manifest URL / no affected request.";
+      }
+
+      document.querySelector("#expected-other-issues").textContent = scenario.otherIssues;
+
+      if (scenario.crossOrigin) {
+        const note = document.querySelector("#cross-origin-note");
+        note.hidden = false;
+        document.querySelector("#xorigin-url").textContent = scenario.manifest;
+      }
+
+      document
+        .querySelector("#navigator-install")
+        .addEventListener("click", async () => {
+          result.textContent = "Running navigator.install()…";
+          try {
+            const value = await navigator.install();
+            result.textContent = `UNEXPECTED success: ${JSON.stringify(value)}`;
+          } catch (error) {
+            result.textContent =
+              `navigator.install() rejected: ${error.name}: ${error.message}`;
+          }
+        });
+
+      const installEl = document.querySelector("#current-document-install");
+      installEl.addEventListener("installresult", (event) => {
+        result.textContent = `<install> result: ${event.result}`;
+      });
+    </script>
+  </body>
+</html>

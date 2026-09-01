@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Web Install DevTools Issue Test Site</title>
+    <link rel="stylesheet" href="../style.css" />
+    <style>
+      main { max-width: 68rem; }
+      .steps, .scenario {
+        border: 1px solid ButtonBorder;
+        border-radius: 0.6rem;
+        margin: 1rem 0;
+        padding: 1rem 1.25rem;
+      }
+      .scenario h3 { margin-top: 0; }
+      code {
+        background: CanvasText;
+        border-radius: 0.2rem;
+        color: Canvas;
+        padding: 0.1rem 0.3rem;
+      }
+      dl.expected dt { font-weight: 700; }
+      dl.expected dd { margin: 0 0 0.5rem 0; }
+      :root { color-scheme: light dark; }
+    </style>
+  </head>
+  <body>
+    <p><a href="../index.html">← Directory of PWAs</a></p>
+    <main>
+      <h1>Web Install DevTools Issue Test Site</h1>
+      <p>
+        Internal test site for the Web Install API's DevTools <em>Issue</em>
+        reporting. Every scenario here is expected to <strong>fail</strong>
+        installation; the point is to verify the DevTools Issue each failure
+        produces. Do not expect a successful install on any page in this
+        directory.
+      </p>
+
+      <section class="steps" aria-labelledby="build-heading">
+        <h2 id="build-heading">What you need</h2>
+        <ul>
+          <li>
+            A Chromium / Edge build that includes the Web Install API
+            (<code>navigator.install()</code> and the <code>&lt;install&gt;</code>
+            element) <em>and</em> the DevTools Web Install Issue reporting
+            changes under test.
+          </li>
+          <li>
+            Enable both feature flags:
+            <ul>
+              <li><code>about://flags/#web-app-installation-api</code> &rarr; Enabled</li>
+              <li><code>about://flags/#web-app-install-element</code> &rarr; Enabled</li>
+            </ul>
+            Restart the browser after toggling.
+          </li>
+        </ul>
+      </section>
+
+      <section class="steps" aria-labelledby="run-heading">
+        <h2 id="run-heading">How to run a scenario</h2>
+        <ol>
+          <li>Open DevTools, then <strong>More tools → Issues</strong>. Keep
+            the Issues panel visible.</li>
+          <li>Open one scenario link below in the same tab.</li>
+          <li>Click the <code>navigator.install()</code> button and read the
+            Issue. Confirm the page-visible result matches the expected
+            <code>DataError</code> / <code>invalid_data</code>.</li>
+          <li>Reload the scenario page (or clear Issues) before triggering the
+            other entry point. Identical Issues deduplicate, so a reload is
+            the reliable way to see the second entry point produce its own
+            Issue.</li>
+          <li>Repeat every scenario in an Incognito / InPrivate window to
+            confirm the diagnostic behavior is profile-independent.</li>
+        </ol>
+      </section>
+
+      <section aria-labelledby="current-heading">
+        <h2 id="current-heading">Current-document entry points</h2>
+        <p>
+          Zero-parameter <code>navigator.install()</code> and untargeted
+          <code>&lt;install&gt;</code>. These consult the current document's
+          linked manifest.
+        </p>
+
+        <div class="scenario">
+          <h3>1. No manifest</h3>
+          <dl class="expected">
+            <dt>Web Install Issue</dt>
+            <dd><strong>No manifest detected</strong> — no manifest URL and no
+              affected request are reported.</dd>
+            <dt>Page-visible result</dt>
+            <dd><code>navigator.install()</code> rejects with
+              <code>DataError</code>; <code>&lt;install&gt;</code> returns
+              <code>invalid_data</code>.</dd>
+          </dl>
+          <a href="./current-document.html?scenario=no-manifest">Open scenario</a>
+        </div>
+
+        <div class="scenario">
+          <h3>2. Malformed manifest</h3>
+          <dl class="expected">
+            <dt>Web Install Issue</dt>
+            <dd><strong>Manifest could not be fetched, is empty, or could not
+              be parsed</strong>, associated with the linked manifest URL.</dd>
+          </dl>
+          <a href="./current-document.html?scenario=malformed">Open scenario</a>
+        </div>
+
+        <div class="scenario">
+          <h3>3. Missing manifest ID</h3>
+          <dl class="expected">
+            <dt>Web Install Issue</dt>
+            <dd><strong>Manifest does not contain an <code>id</code> field</strong>,
+              associated with the linked manifest URL.</dd>
+          </dl>
+          <a href="./current-document.html?scenario=missing-id">Open scenario</a>
+        </div>
+
+        <div class="scenario">
+          <h3>4. Invalid <code>start_url</code></h3>
+          <dl class="expected">
+            <dt>Web Install Issue</dt>
+            <dd><strong>Manifest <code>start_url</code> is not valid</strong>,
+              associated with the linked manifest URL.</dd>
+          </dl>
+          <a href="./current-document.html?scenario=start-url-invalid">Open scenario</a>
+        </div>
+
+        <div class="scenario">
+          <h3>5. Missing <code>name</code> and <code>short_name</code></h3>
+          <dl class="expected">
+            <dt>Web Install Issue</dt>
+            <dd><strong>Manifest does not contain a <code>name</code> or
+              <code>short_name</code> field</strong>, associated with the
+              linked manifest URL.</dd>
+          </dl>
+          <a href="./current-document.html?scenario=missing-name">Open scenario</a>
+        </div>
+
+        <div class="scenario">
+          <h3>6. Cross-origin manifest (CORS-blocked) &mdash; privacy boundary</h3>
+          <dl class="expected">
+            <dt>Web Install Issue</dt>
+            <dd><strong>No Web Install Issue is reported.</strong> Current-document
+              Issues are intentionally suppressed when the linked manifest is on
+              a different origin from the document, to avoid exposing
+              cross-origin fetch details.</dd>
+            <dt>Other Issues</dt>
+            <dd>A CORS Issue from the browser blocking the manifest fetch is
+              expected. The remote manifest is never actually consumed, so its
+              body (valid or malformed) does not affect this scenario.</dd>
+            <dt>Page-visible result</dt>
+            <dd><code>navigator.install()</code> still rejects with
+              <code>DataError</code>; <code>&lt;install&gt;</code> still returns
+              <code>invalid_data</code>.</dd>
+          </dl>
+          <a href="./current-document.html?scenario=cross-origin">Open scenario</a>
+        </div>
+      </section>
+
+      <section aria-labelledby="explicit-heading">
+        <h2 id="explicit-heading">Explicit / background-manifest entry points</h2>
+        <p>
+          <code>navigator.install({manifest})</code> and targeted
+          <code>&lt;install manifest&gt;</code>. These take a manifest URL
+          directly and do not depend on the current document having a
+          <code>&lt;link rel="manifest"&gt;</code>.
+        </p>
+        <p><a href="./explicit-manifest.html">Open the explicit-manifest scenarios →</a></p>
+      </section>
+
+      <section aria-labelledby="privacy-heading">
+        <h2 id="privacy-heading">What this site does <em>not</em> do</h2>
+        <p>
+          So that DevTools Network / Storage activity you observe here can be
+          attributed to the API under test rather than to this site, these
+          pages intentionally do the minimum:
+        </p>
+        <ul>
+          <li>No analytics, telemetry, beacons, or any <code>fetch()</code>
+            to a logging endpoint.</li>
+          <li>No cookies, no <code>localStorage</code>, no
+            <code>sessionStorage</code>, no IndexedDB, no service worker.</li>
+          <li>No third-party scripts, stylesheets, fonts, or CDN assets.</li>
+          <li>No form fields, so nothing you type or click is collected or
+            transmitted.</li>
+          <li>The only outbound requests are the manifest fetches that the
+            Web Install API itself triggers (plus the one cross-origin
+            manifest URL in scenario&nbsp;6, which is the behavior being
+            tested).</li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
