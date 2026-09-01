@@ -192,16 +192,20 @@
           result.textContent = "Running navigator.install()…";
           try {
             const value = await navigator.install();
-            result.textContent = `UNEXPECTED success: ${JSON.stringify(value)}`;
+            const msg = `UNEXPECTED success: ${JSON.stringify(value)}`;
+            result.textContent = msg;
+            console.error("navigator.install()", msg);
           } catch (error) {
             result.textContent =
               `navigator.install() rejected: ${error.name}: ${error.message}`;
+            console.error("navigator.install() rejected:", error);
           }
         });
 
       const installEl = document.querySelector("#current-document-install");
       installEl.addEventListener("installresult", (event) => {
         result.textContent = `<install> result: ${event.result}`;
+        console.error("<install> installresult:", event.result, event);
       });
     </script>
   </body>
