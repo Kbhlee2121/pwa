@@ -128,10 +128,16 @@
           result.textContent = `${scenario.label}: running navigator.install({manifest})…`;
           try {
             const value = await navigator.install({ manifest: manifestHref });
-            result.textContent = `${scenario.label}: UNEXPECTED success: ${JSON.stringify(value)}`;
+            const msg = `${scenario.label}: UNEXPECTED success: ${JSON.stringify(value)}`;
+            result.textContent = msg;
+            console.error("navigator.install({manifest})", msg);
           } catch (error) {
             result.textContent =
               `${scenario.label}: navigator.install({manifest}) rejected: ${error.name}: ${error.message}`;
+            console.error(
+              `${scenario.label}: navigator.install({manifest}) rejected:`,
+              error,
+            );
           }
         });
 
@@ -139,6 +145,11 @@
         installEl.setAttribute("manifest", manifestHref);
         installEl.addEventListener("installresult", (event) => {
           result.textContent = `${scenario.label}: <install> result: ${event.result}`;
+          console.error(
+            `${scenario.label}: <install> installresult:`,
+            event.result,
+            event,
+          );
         });
         section.append(installEl);
 
