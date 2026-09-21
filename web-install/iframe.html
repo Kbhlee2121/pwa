@@ -15,8 +15,9 @@
     <h2>kbhlee2121 iframe</h2>
     <p>Executes:</p>
     <pre><code>
-      let manifest_url = "https://mustjab.github.io/manifest.json";
-      navigator.install(manifest_url);
+      navigator.install({
+        manifest: "https://mustjab.github.io/manifest.json"
+      });
     </code></pre>
     <button id="framedApi">Install</button>
     <p>Executes:</p>
@@ -52,8 +53,9 @@
     // Same-origin with 2 params.
     document.getElementById("framedApi").addEventListener("click", async () => {
       try {
-        let manifest_url = "https://mustjab.github.io/manifest.json";
-        await navigator.install(manifest_url).then((result) => {
+        await navigator.install({
+          manifest: "https://mustjab.github.io/manifest.json"
+        }).then((result) => {
           console.log(result);
         });
       } catch (err) {
