@@ -15,15 +15,15 @@
     <h2>kbhlee2121 iframe</h2>
     <p>Executes:</p>
     <pre><code>
-      let install_url = "https://mustjab.github.io/";
-      navigator.install(install_url);
+      let manifest_url = "https://mustjab.github.io/manifest.json";
+      navigator.install(manifest_url);
     </code></pre>
     <button id="framedApi">Install</button>
     <p>Executes:</p>
     <pre><code>
-      &lt;install installurl="https://mustjab.github.io/"&gt;&lt;/install&gt;
+      &lt;install manifest="https://mustjab.github.io/manifest.json"&gt;&lt;/install&gt;
     </code></pre>
-    <install installurl="https://mustjab.github.io/" id="framedElement"></install>
+    <install manifest="https://mustjab.github.io/manifest.json" id="framedElement"></install>
 
     <p>Executes:</p>
     <pre><code>
@@ -33,9 +33,9 @@
 
     <p>Executes (Installing self with params):</p>
     <pre><code>
-      &lt;install installurl="https://kbhlee2121.github.io/pwa/web-install/index.html"&gt;&lt;/install&gt;
+      &lt;install manifest="https://kbhlee2121.github.io/pwa/web-install/manifest.json"&gt;&lt;/install&gt;
     </code></pre>
-    <install installurl="https://kbhlee2121.github.io/pwa/web-install/index.html" id="framedSelfElement"></install>
+    <install manifest="https://kbhlee2121.github.io/pwa/web-install/manifest.json" id="framedSelfElement"></install>
 
     <p>Executes:</p>
     <pre><code>
@@ -52,8 +52,8 @@
     // Same-origin with 2 params.
     document.getElementById("framedApi").addEventListener("click", async () => {
       try {
-        let install_url = "https://mustjab.github.io/";
-        await navigator.install(install_url).then((result) => {
+        let manifest_url = "https://mustjab.github.io/manifest.json";
+        await navigator.install(manifest_url).then((result) => {
           console.log(result);
         });
       } catch (err) {
