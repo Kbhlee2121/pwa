@@ -66,8 +66,8 @@ crossOriginParamsTwoParamsBtn.addEventListener("click", async() => {
   try {
     // Make sure to update the visible code sample in index.html when updating
     // this.
-    let manifestId = "https://diek.us/bubble/";
-    let manifest = "https://diek.us/bubble/manifest.json";
+    let manifestId = "https://isitchristmas.com/";
+    let manifest = "https://isitchristmas.com/manifest.json";
     await navigator.install({ manifest, manifestId }).then((result) => {
       console.log(result);
     });
