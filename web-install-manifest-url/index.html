@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../style.css"/>
     <link rel="icon" href="./favicon.ico" />
   </head>
-  <body>
+  <body class="manifest-test-page">
     <h1>Web Install Sample</h1>
     <h2>Manifest-first installs!</h2>
     <p>
@@ -49,16 +49,27 @@
       See the <a href="permission-policy.html">Permission Policy test page</a>
     </p>
 
-    <h2 style="color:Tomato;">Intended use cases</h2>
+    <nav class="jump-links" aria-label="Page sections">
+      <strong>Jump to:</strong>
+      <ul>
+        <li><a href="#intended-use-cases">Intended use cases</a></li>
+        <li><a href="#installing-self">Installing self</a></li>
+        <li><a href="#data-error-cases"><code>DataError</code> cases</a></li>
+        <li><a href="#type-error-cases"><code>TypeError</code> cases</a></li>
+      </ul>
+    </nav>
 
-    <h3>Current doc, no args (manifest has `id`)</h3>
+    <h2 id="intended-use-cases" class="test-section-heading section-intended">Intended Use Cases</h2>
+    <p>Expected result: <code>success</code>.</p>
+
+    <h3 class="test-case-heading">Current document, no arguments (manifest has <code>id</code>)</h3>
     <p>Executes:</p>
     <pre><code>
       navigator.install();
     </code></pre>
     <button id="installSameOriginZeroParams">Install (current doc)</button>
 
-    <h3>Background doc, cross origin, manifest only (manifest has `id`)</h3>
+    <h3 class="test-case-heading">Background document, cross-origin manifest only (manifest has <code>id</code>)</h3>
     <p>Executes:</p>
     <pre><code>
       navigator.install({
@@ -67,7 +78,7 @@
     </code></pre>
     <button id="installCrossOriginOneParam">Install (manifest)</button>
 
-    <h3>Background doc, cross origin, manifest + manifestId (manifest has no `id`)</h3>
+    <h3 class="test-case-heading">Background document, cross-origin manifest and <code>manifestId</code> (manifest has no <code>id</code>)</h3>
     <p>Executes:</p>
     <pre><code>
       navigator.install({
@@ -77,7 +88,7 @@
     </code></pre>
     <button id="installCrossOriginTwoParams">Install (manifest + manifestId)</button>
 
-    <h3>Background doc, same origin, manifest has `id`, manifestId undefined</h3>
+    <h3 class="test-case-heading">Background document, same-origin manifest has <code>id</code>, <code>manifestId</code> undefined</h3>
     <p>
       <code>manifestId</code> is optional. Passing <code>undefined</code> or
       <code>null</code> is treated the same as not supplying it, so installation
@@ -92,7 +103,7 @@
     </code></pre>
     <button id="installTwoParamsUndefinedManifestId">Install (undefined manifestId)</button>
 
-    <h3>Background doc, cross origin, with screenshots</h3>
+    <h3 class="test-case-heading">Background document, cross-origin manifest with screenshots</h3>
     <p>*Note - screenshots not yet supported</p>
     <p>Executes:</p>
     <pre><code>
@@ -103,9 +114,9 @@
     </code></pre>
     <button id="installCrossOriginScreenshots">Install (manifest + manifestId)</button>
 
-    <h2 style="color:Tomato;">Edge case - installing self with params</h2>
+    <h2 id="installing-self" class="test-section-heading section-edge-case">Edge Case: Installing Self with Parameters</h2>
     <p>*Note - Although the end result is the same ('foo' site installs itself), passing parameters like this will launch the foo app in a new window, preserving the 'foo' tab in the main browser window. </p>
-    <h3>Install self, manifest only</h3>
+    <h3 class="test-case-heading">Install current document, manifest only</h3>
     <p>Executes:</p>
     <pre><code>
       navigator.install({
@@ -114,7 +125,7 @@
     </code></pre>
     <button id="installSameOriginOneParam">Install (manifest)</button>
 
-    <h3>Install self, manifest + manifestId</h3>
+    <h3 class="test-case-heading">Install current document, manifest and <code>manifestId</code></h3>
     <p>Executes:</p>
     <pre><code>
       navigator.install({
@@ -124,9 +135,9 @@
     </code></pre>
     <button id="installSameOriginTwoParams">Install (manifest + manifestId)</button>
 
-    <h2 style="color:Tomato;">DataError cases - manifest validation</h2>
+    <h2 id="data-error-cases" class="test-section-heading section-error"><code>DataError</code> Cases: Manifest Validation</h2>
 
-    <h3>Invalid manifest URL</h3>
+    <h3 class="test-case-heading">Relative manifest URL resolves, but fetching and processing fail</h3>
     <p>Executes:</p>
     <pre><code>
       navigator.install({
@@ -135,7 +146,7 @@
     </code></pre>
     <button id="installOneParamInvalidUrl">Install (invalid URL)</button>
 
-    <h3>Background doc, NO id in manifest, manifestId omitted</h3>
+    <h3 class="test-case-heading">Background document, manifest has no <code>id</code>, <code>manifestId</code> omitted</h3>
     <p>Executes:</p>
     <pre><code>
       navigator.install({
@@ -144,7 +155,7 @@
     </code></pre>
     <button id="installOneParamNoDefinedId">Install (manifest)</button>
 
-    <h3>Background doc, NO id in manifest, manifestId undefined</h3>
+    <h3 class="test-case-heading">Background document, manifest has no <code>id</code>, <code>manifestId</code> undefined</h3>
     <p>
       Because <code>undefined</code> is treated as not supplying
       <code>manifestId</code>, this returns <code>DataError</code>: the manifest
@@ -159,7 +170,7 @@
     </code></pre>
     <button id="installUndefinedManifestIdNoDefinedId">Install (undefined manifestId)</button>
 
-    <h3>Background doc, YES id in manifest, mismatched manifestId</h3>
+    <h3 class="test-case-heading">Background document, manifest has <code>id</code>, mismatched <code>manifestId</code></h3>
     <p>Executes:</p>
     <pre><code>
       navigator.install({
@@ -169,7 +180,7 @@
     </code></pre>
     <button id="installTwoParamsMismatchedDefinedId">Install (manifest + manifestId)</button>
 
-    <h3>Background doc, NO id in manifest, mismatched manifestId</h3>
+    <h3 class="test-case-heading">Background document, manifest has no <code>id</code>, mismatched <code>manifestId</code></h3>
     <p>Executes:</p>
     <pre><code>
       navigator.install({
@@ -179,16 +190,16 @@
     </code></pre>
     <button id="installTwoParamsMismatchedNoDefinedId">Install (manifest + manifestId)</button>
 
-    <h2 style="color:Tomato;">V8 TypeError - bad JS input</h2>
+    <h2 id="type-error-cases" class="test-section-heading section-error"><code>TypeError</code> Cases: Invalid JavaScript Input</h2>
 
-    <h3>Missing required manifest</h3>
+    <h3 class="test-case-heading">Missing required manifest</h3>
     <p>Executes:</p>
     <pre><code>
       navigator.install({});
     </code></pre>
     <button id="installMissingManifest">Install (missing manifest)</button>
 
-    <h3>Empty manifest URL</h3>
+    <h3 class="test-case-heading">Empty manifest URL</h3>
     <p>Executes:</p>
     <pre><code>
       navigator.install({
@@ -197,7 +208,7 @@
     </code></pre>
     <button id="installEmptyManifest">Install (empty manifest)</button>
 
-    <h3>Malformed manifest URL</h3>
+    <h3 class="test-case-heading">Malformed manifest URL</h3>
     <p>Executes:</p>
     <pre><code>
       navigator.install({
@@ -206,7 +217,7 @@
     </code></pre>
     <button id="installMalformedManifest">Install (malformed manifest)</button>
 
-    <h3>Empty manifestId</h3>
+    <h3 class="test-case-heading">Empty <code>manifestId</code></h3>
     <p>Executes:</p>
     <pre><code>
       navigator.install({
@@ -216,7 +227,7 @@
     </code></pre>
     <button id="installEmptyManifestId">Install (empty manifestId)</button>
 
-    <h3>Malformed manifestId</h3>
+    <h3 class="test-case-heading">Malformed <code>manifestId</code></h3>
     <p>Executes:</p>
     <pre><code>
       navigator.install({
@@ -226,7 +237,7 @@
     </code></pre>
     <button id="installMalformedManifestId">Install (malformed manifestId)</button>
 
-    <h3>Undefined manifest</h3>
+    <h3 class="test-case-heading">Undefined manifest</h3>
     <p>Executes:</p>
     <pre><code>
       navigator.install({
@@ -235,7 +246,7 @@
     </code></pre>
     <button id="installOneParamUndefined">Install (undefined manifest)</button>
 
-    <h3>Undefined manifest, defined manifestId</h3>
+    <h3 class="test-case-heading">Undefined manifest, defined <code>manifestId</code></h3>
     <p>Executes:</p>
     <pre><code>
       navigator.install({
