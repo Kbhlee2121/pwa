@@ -20,20 +20,20 @@ if (!navigator.install) {
 const sameOriginZeroParamsBtn = document.getElementById("installSameOriginZeroParams");
 const crossOriginOneParamBtn = document.getElementById("installCrossOriginOneParam");
 const crossOriginParamsTwoParamsBtn = document.getElementById("installCrossOriginTwoParams");
+const installTwoParamsUndefinedManifestIdBtn = document.getElementById("installTwoParamsUndefinedManifestId");
 const installCrossOriginScreenshotsBtn = document.getElementById("installCrossOriginScreenshots");
 // DataError Cases
 const installOneParamNoDefinedIdBtn = document.getElementById("installOneParamNoDefinedId");
+const installUndefinedManifestIdNoDefinedIdBtn = document.getElementById("installUndefinedManifestIdNoDefinedId");
 const installTwoParamsMismatchedDefinedIdBtn = document.getElementById("installTwoParamsMismatchedDefinedId");
 const installTwoParamsMismatchedNoDefinedIdBtn = document.getElementById("installTwoParamsMismatchedNoDefinedId");
 // TypeError Cases
 const installOneParamUndefinedBtn = document.getElementById("installOneParamUndefined");
 const installOneParamInvalidUrlBtn = document.getElementById("installOneParamInvalidUrl");
 const installTwoParamsUndefinedUrlBtn = document.getElementById("installTwoParamsUndefinedUrl");
-const installTwoParamsUndefinedManifestIdBtn = document.getElementById("installTwoParamsUndefinedManifestId");
 // Edge Cases - Installing self with params
 const sameOriginOneParamBtn = document.getElementById("installSameOriginOneParam");
 const sameOriginTwoParamsBtn = document.getElementById("installSameOriginTwoParams");
-const huluTestBtn = document.getElementById("huluTest");
 
 // ------- HANDLER FUNCTIONS --------
 // Intended Use Cases
@@ -76,6 +76,19 @@ crossOriginParamsTwoParamsBtn.addEventListener("click", async() => {
   } 
 });
 
+// An omitted manifestId is read from the manifest's custom `id`.
+installTwoParamsUndefinedManifestIdBtn.addEventListener("click", async() => {
+  try {
+    let manifest = "https://kbhlee2121.github.io/pwa/web-install/manifest.webmanifest";
+    let manifestId;
+    await navigator.install({ manifest, manifestId }).then((result) => {
+      console.log(result);
+    });
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 // A PWA that shows the detailed install dialog. For internal testing.
 // As of 2025-07-02: detailed install dialog is not yet supported.
 installCrossOriginScreenshotsBtn.addEventListener("click", async() => {
@@ -92,7 +105,7 @@ installCrossOriginScreenshotsBtn.addEventListener("click", async() => {
 
 // DataError Cases
 
-// 1 param install url with no id defined in the web app manifest.
+// 1 param manifest URL with no id defined in the web app manifest.
 installOneParamNoDefinedIdBtn.addEventListener("click", async() => {
   try {
     // Amanda's web install sample app that doesn't have an ID defined in the manifest.
@@ -105,7 +118,20 @@ installOneParamNoDefinedIdBtn.addEventListener("click", async() => {
   } 
 });
 
-// 2 param install url WITH an id defined in the manifest, but mismatched input param.
+// An omitted manifestId is invalid when the manifest has no custom `id`.
+installUndefinedManifestIdNoDefinedIdBtn.addEventListener("click", async() => {
+  try {
+    let manifest = "https://isitchristmas.com/manifest.json";
+    let manifestId;
+    await navigator.install({ manifest, manifestId }).then((result) => {
+      console.log(result);
+    });
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+// 2 param manifest URL WITH an id defined in the manifest, but mismatched input param.
 installTwoParamsMismatchedDefinedIdBtn.addEventListener("click", async() => {
   try {
     let manifest = "https://mustjab.github.io/manifest.json";
@@ -117,7 +143,7 @@ installTwoParamsMismatchedDefinedIdBtn.addEventListener("click", async() => {
     console.error(err);
   } 
 });
-// 2 param install url WITHOUT an id defined in the manifest, mismatched input param.
+// 2 param manifest URL WITHOUT an id defined in the manifest, mismatched input param.
 installTwoParamsMismatchedNoDefinedIdBtn.addEventListener("click", async() => {
   try {
     let manifest = "https://amandabaker.github.io/pwa/web-install/manifest.webmanifest";
@@ -156,19 +182,7 @@ installOneParamInvalidUrlBtn.addEventListener("click", async() => {
 installTwoParamsUndefinedUrlBtn.addEventListener("click", async() => {
   try {
     let manifest;
-    let manifestId = "https://diek.us/bubble/";
-    await navigator.install({ manifest, manifestId }).then((result) => {
-      console.log(result);
-    });
-  } catch (err) {
-    console.error(err);
-  } 
-});
-
-installTwoParamsUndefinedManifestIdBtn.addEventListener("click", async() => {
-  try {
-    let manifest = "https://kbhlee2121.github.io/pwa/web-install/manifest.webmanifest";
-    let manifestId;
+    let manifestId = "https://isitchristmas.com/";
     await navigator.install({ manifest, manifestId }).then((result) => {
       console.log(result);
     });
@@ -202,16 +216,4 @@ sameOriginTwoParamsBtn.addEventListener("click", async() => {
   } catch (err) {
     console.error(err);
   } 
-});
-
-huluTestBtn.addEventListener("click", async() => {
-  try {
-    let manifest = "https://www.hulu.com/app/manifest.json";
-    let manifestId = "https://www.hulu.com/app/?utm_source=a2hs";
-    await navigator.install({ manifest, manifestId }).then((result) => {
-      console.log(result);
-    });
-  } catch (err) {
-    console.error(err);
-  }
 });

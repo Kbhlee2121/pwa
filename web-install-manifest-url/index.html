@@ -77,6 +77,21 @@
     </code></pre>
     <button id="installCrossOriginTwoParams">Install (manifest + manifestId)</button>
 
+    <h3>Background doc, same origin, manifest has `id`, manifestId undefined</h3>
+    <p>
+      <code>manifestId</code> is optional. Passing <code>undefined</code> or
+      <code>null</code> is treated the same as not supplying it, so installation
+      can succeed when the manifest declares a custom <code>id</code>.
+    </p>
+    <p>Executes:</p>
+    <pre><code>
+      navigator.install({
+        manifest: "https://kbhlee2121.github.io/pwa/web-install/manifest.webmanifest",
+        manifestId: undefined,
+      });
+    </code></pre>
+    <button id="installTwoParamsUndefinedManifestId">Install (undefined manifestId)</button>
+
     <h3>Background doc, cross origin, with screenshots</h3>
     <p>*Note - screenshots not yet supported</p>
     <p>Executes:</p>
@@ -119,6 +134,21 @@
       });
     </code></pre>
     <button id="installOneParamNoDefinedId">Install (manifest)</button>
+
+    <h3>Background doc, NO id in manifest, manifestId undefined</h3>
+    <p>
+      Because <code>undefined</code> is treated as not supplying
+      <code>manifestId</code>, this returns <code>DataError</code>: the manifest
+      does not declare a custom <code>id</code>.
+    </p>
+    <p>Executes:</p>
+    <pre><code>
+      navigator.install({
+        manifest: "https://isitchristmas.com/manifest.json",
+        manifestId: undefined,
+      });
+    </code></pre>
+    <button id="installUndefinedManifestIdNoDefinedId">Install (undefined manifestId)</button>
 
     <h3>Background doc, YES id in manifest, mismatched manifestId</h3>
     <p>Executes:</p>
@@ -165,28 +195,10 @@
     <pre><code>
       navigator.install({
         manifest: undefined,
-        manifestId: "https://diek.us/bubble/",
+        manifestId: "https://isitchristmas.com/",
       });
     </code></pre>
     <button id="installTwoParamsUndefinedUrl">Install (undefined manifest)</button>
-
-    <h3>Defined manifest, undefined manifestId</h3>
-    <p>Executes:</p>
-    <pre><code>
-      navigator.install({
-        manifest: "https://kbhlee2121.github.io/pwa/web-install/manifest.webmanifest",
-        manifestId: undefined,
-      });
-    </code></pre>
-    <button id="installTwoParamsUndefinedManifestId">Install (undefined manifestId)</button>
-
-    <pre><code>
-      navigator.install({
-        manifest: "https://www.hulu.com/app/manifest.json",
-        manifestId: "https://www.hulu.com/app/?utm_source=a2hs",
-      });
-    </code></pre>
-    <button id="huluTest">Install (manifest + manifestId)</button>
 
     <!-- <h2>Install with custom info</h2>
     <p>Executes <code>navigator.install({ manifest, manifestId })</code> using:</p>
