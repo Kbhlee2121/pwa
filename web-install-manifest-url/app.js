@@ -23,13 +23,18 @@ const crossOriginParamsTwoParamsBtn = document.getElementById("installCrossOrigi
 const installTwoParamsUndefinedManifestIdBtn = document.getElementById("installTwoParamsUndefinedManifestId");
 const installCrossOriginScreenshotsBtn = document.getElementById("installCrossOriginScreenshots");
 // DataError Cases
+const installOneParamInvalidUrlBtn = document.getElementById("installOneParamInvalidUrl");
 const installOneParamNoDefinedIdBtn = document.getElementById("installOneParamNoDefinedId");
 const installUndefinedManifestIdNoDefinedIdBtn = document.getElementById("installUndefinedManifestIdNoDefinedId");
 const installTwoParamsMismatchedDefinedIdBtn = document.getElementById("installTwoParamsMismatchedDefinedId");
 const installTwoParamsMismatchedNoDefinedIdBtn = document.getElementById("installTwoParamsMismatchedNoDefinedId");
 // TypeError Cases
+const installMissingManifestBtn = document.getElementById("installMissingManifest");
+const installEmptyManifestBtn = document.getElementById("installEmptyManifest");
+const installMalformedManifestBtn = document.getElementById("installMalformedManifest");
+const installEmptyManifestIdBtn = document.getElementById("installEmptyManifestId");
+const installMalformedManifestIdBtn = document.getElementById("installMalformedManifestId");
 const installOneParamUndefinedBtn = document.getElementById("installOneParamUndefined");
-const installOneParamInvalidUrlBtn = document.getElementById("installOneParamInvalidUrl");
 const installTwoParamsUndefinedUrlBtn = document.getElementById("installTwoParamsUndefinedUrl");
 // Edge Cases - Installing self with params
 const sameOriginOneParamBtn = document.getElementById("installSameOriginOneParam");
@@ -105,6 +110,16 @@ installCrossOriginScreenshotsBtn.addEventListener("click", async() => {
 
 // DataError Cases
 
+installOneParamInvalidUrlBtn.addEventListener("click", async() => {
+  try {
+    await navigator.install({ manifest: "badurl" }).then((result) => {
+      console.log(result);
+    });
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 // 1 param manifest URL with no id defined in the web app manifest.
 installOneParamNoDefinedIdBtn.addEventListener("click", async() => {
   try {
@@ -158,20 +173,64 @@ installTwoParamsMismatchedNoDefinedIdBtn.addEventListener("click", async() => {
 
 // V8 TypeError Cases
 
-installOneParamUndefinedBtn.addEventListener("click", async() => {
+installMissingManifestBtn.addEventListener("click", async() => {
   try {
-    let manifest;
-    await navigator.install({ manifest }).then((result) => {
+    await navigator.install({}).then((result) => {
       console.log(result);
     });
   } catch (err) {
     console.error(err);
-  } 
+  }
 });
 
-installOneParamInvalidUrlBtn.addEventListener("click", async() => {
+installEmptyManifestBtn.addEventListener("click", async() => {
   try {
-    await navigator.install({ manifest: "badurl" }).then((result) => {
+    await navigator.install({ manifest: "" }).then((result) => {
+      console.log(result);
+    });
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+installMalformedManifestBtn.addEventListener("click", async() => {
+  try {
+    await navigator.install({ manifest: "https://[" }).then((result) => {
+      console.log(result);
+    });
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+installEmptyManifestIdBtn.addEventListener("click", async() => {
+  try {
+    const manifest = "https://mustjab.github.io/manifest.json";
+    const manifestId = "";
+    await navigator.install({ manifest, manifestId }).then((result) => {
+      console.log(result);
+    });
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+installMalformedManifestIdBtn.addEventListener("click", async() => {
+  try {
+    const manifest = "https://mustjab.github.io/manifest.json";
+    const manifestId = "https://[";
+    await navigator.install({ manifest, manifestId }).then((result) => {
+      console.log(result);
+    });
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+installOneParamUndefinedBtn.addEventListener("click", async() => {
+  try {
+    let manifest;
+    await navigator.install({ manifest }).then((result) => {
       console.log(result);
     });
   } catch (err) {

@@ -118,6 +118,14 @@
     <install manifest="https://amandabaker.github.io/pwa/web-install/manifest.webmanifest" manifestid="mismatched-manifest-id"></install>
 
     <h2 style="color:Tomato;">More Error Cases</h2>
+    <p>Expected <code>installresult</code>: <code>invalid_data</code>.</p>
+
+    <h3>1 params, background doc, relative URL is valid but fetching and processing fails</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install manifest="badurl"&gt;&lt;/install&gt;
+    </code></pre>
+    <install manifest="badurl"></install>
 
     <h3>2 params, background doc, invalid type for manifest URL</h3>
     <p>Executes:</p>

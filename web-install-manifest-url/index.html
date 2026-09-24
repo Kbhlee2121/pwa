@@ -124,7 +124,16 @@
     </code></pre>
     <button id="installSameOriginTwoParams">Install (manifest + manifestId)</button>
 
-    <h2 style="color:Tomato;">DataError cases - manifest id validation</h2>
+    <h2 style="color:Tomato;">DataError cases - manifest validation</h2>
+
+    <h3>Invalid manifest URL</h3>
+    <p>Executes:</p>
+    <pre><code>
+      navigator.install({
+        manifest: "badurl",
+      });
+    </code></pre>
+    <button id="installOneParamInvalidUrl">Install (invalid URL)</button>
 
     <h3>Background doc, NO id in manifest, manifestId omitted</h3>
     <p>Executes:</p>
@@ -172,6 +181,51 @@
 
     <h2 style="color:Tomato;">V8 TypeError - bad JS input</h2>
 
+    <h3>Missing required manifest</h3>
+    <p>Executes:</p>
+    <pre><code>
+      navigator.install({});
+    </code></pre>
+    <button id="installMissingManifest">Install (missing manifest)</button>
+
+    <h3>Empty manifest URL</h3>
+    <p>Executes:</p>
+    <pre><code>
+      navigator.install({
+        manifest: "",
+      });
+    </code></pre>
+    <button id="installEmptyManifest">Install (empty manifest)</button>
+
+    <h3>Malformed manifest URL</h3>
+    <p>Executes:</p>
+    <pre><code>
+      navigator.install({
+        manifest: "https://[",
+      });
+    </code></pre>
+    <button id="installMalformedManifest">Install (malformed manifest)</button>
+
+    <h3>Empty manifestId</h3>
+    <p>Executes:</p>
+    <pre><code>
+      navigator.install({
+        manifest: "https://mustjab.github.io/manifest.json",
+        manifestId: "",
+      });
+    </code></pre>
+    <button id="installEmptyManifestId">Install (empty manifestId)</button>
+
+    <h3>Malformed manifestId</h3>
+    <p>Executes:</p>
+    <pre><code>
+      navigator.install({
+        manifest: "https://mustjab.github.io/manifest.json",
+        manifestId: "https://[",
+      });
+    </code></pre>
+    <button id="installMalformedManifestId">Install (malformed manifestId)</button>
+
     <h3>Undefined manifest</h3>
     <p>Executes:</p>
     <pre><code>
@@ -180,15 +234,6 @@
       });
     </code></pre>
     <button id="installOneParamUndefined">Install (undefined manifest)</button>
-
-    <h3>Invalid manifest URL</h3>
-    <p>Executes:</p>
-    <pre><code>
-      navigator.install({
-        manifest: "badurl",
-      });
-    </code></pre>
-    <button id="installOneParamInvalidUrl">Install (invalid URL)</button>
 
     <h3>Undefined manifest, defined manifestId</h3>
     <p>Executes:</p>
