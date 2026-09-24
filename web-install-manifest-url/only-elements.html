@@ -27,6 +27,9 @@
       We'd love to hear your feedback! To share feedback, please create a
       <a href="https://github.com/WICG/install-element/issues/new?template=install-element-ot-feedback.md">GitHub issue</a>.
     </p>
+    <p>
+      <a href="index.html">&larr; Back to main test page</a>
+    </p>
 
     <p>Executes:</p>
     <pre><code>
@@ -42,11 +45,33 @@
 
     <p>Executes:</p>
     <pre><code>
-      &lt;install manifest="https://diek.us/bubble/manifest.json" manifestid="https://diek.us/bubble/"&gt;&lt;/install&gt;
+      &lt;install manifest="https://isitchristmas.com/manifest.json" manifestid="https://isitchristmas.com/"&gt;&lt;/install&gt;
     </code></pre>
-    <install manifest="https://diek.us/bubble/manifest.json" manifestid="https://diek.us/bubble/"></install>
+    <install manifest="https://isitchristmas.com/manifest.json" manifestid="https://isitchristmas.com/"></install>
 
-    <h2 style="color:Tomato;">DataError cases - manifest id validation (install element)</h2>
+    <h3>Background doc, same origin, manifest has `id`, manifestId undefined</h3>
+    <p>
+      The <code>manifestId</code> property is optional. Assigning
+      <code>undefined</code> to this nullable WebIDL property converts it to
+      <code>null</code>, so no manifest ID is supplied. Installation can still
+      succeed because the manifest declares a custom <code>id</code>. Expected
+      result: <code>success</code>.
+    </p>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install id="installUndefinedManifestId" manifest="https://kbhlee2121.github.io/pwa/web-install/manifest.webmanifest"&gt;&lt;/install&gt;
+      &lt;script&gt;
+        const install = document.getElementById("installUndefinedManifestId");
+        install.manifestId = undefined; // Nullable WebIDL converts this to null.
+      &lt;/script&gt;
+    </code></pre>
+    <install id="installUndefinedManifestId" manifest="https://kbhlee2121.github.io/pwa/web-install/manifest.webmanifest"></install>
+    <script>
+      const install = document.getElementById("installUndefinedManifestId");
+      install.manifestId = undefined; // Nullable WebIDL converts this to null.
+    </script>
+
+    <h2 style="color:Tomato;">invalid_data cases - manifest ID validation (&lt;install&gt; element)</h2>
 
     <h3>1 param, background doc, NO id in manifest</h3>
     <p>Executes:</p>
@@ -54,6 +79,29 @@
       &lt;install manifest="https://amandabaker.github.io/pwa/web-install/manifest.webmanifest"&gt;&lt;/install&gt;
     </code></pre>
     <install manifest="https://amandabaker.github.io/pwa/web-install/manifest.webmanifest"></install>
+
+    <h3>Background doc, NO id in manifest, manifestId undefined</h3>
+    <p>
+      Assigning <code>undefined</code> to the nullable
+      <code>manifestId</code> property converts it to <code>null</code>, so no
+      manifest ID is supplied. This manifest does not declare a custom
+      <code>id</code>, so the expected <code>installresult</code> value is
+      <code>invalid_data</code>, equivalent to
+      <code>navigator.install()</code> rejecting with <code>DataError</code>.
+    </p>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install id="installUndefinedManifestIdNoCustomId" manifest="https://isitchristmas.com/manifest.json"&gt;&lt;/install&gt;
+      &lt;script&gt;
+        const installWithoutCustomId = document.getElementById("installUndefinedManifestIdNoCustomId");
+        installWithoutCustomId.manifestId = undefined; // Nullable WebIDL converts this to null.
+      &lt;/script&gt;
+    </code></pre>
+    <install id="installUndefinedManifestIdNoCustomId" manifest="https://isitchristmas.com/manifest.json"></install>
+    <script>
+      const installWithoutCustomId = document.getElementById("installUndefinedManifestIdNoCustomId");
+      installWithoutCustomId.manifestId = undefined; // Nullable WebIDL converts this to null.
+    </script>
 
     <h3>2 params, background doc, YES id in manifest, mismatched input</h3>
     <p>Executes:</p>
@@ -71,84 +119,84 @@
 
     <h2 style="color:Tomato;">More Error Cases</h2>
 
-    <h3>2 params, background doc, invalid type for install url</h3>
+    <h3>2 params, background doc, invalid type for manifest URL</h3>
     <p>Executes:</p>
     <pre><code>
-      &lt;install manifest=12345 manifestid="https://diek.us/bubble/"&gt;&lt;/install&gt;
+      &lt;install manifest=12345 manifestid="https://isitchristmas.com/"&gt;&lt;/install&gt;
     </code></pre>
-    <install manifest=12345 manifestid="https://diek.us/bubble/"></install>
+    <install manifest=12345 manifestid="https://isitchristmas.com/"></install>
 
     <h3>2 params, background doc, invalid type for manifest id</h3>
     <p>Executes:</p>
     <pre><code>
-      &lt;install manifest="https://diek.us/bubble/manifest.json" manifestid=67890&gt;&lt;/install&gt;
+      &lt;install manifest="https://isitchristmas.com/manifest.json" manifestid=67890&gt;&lt;/install&gt;
     </code></pre>
-    <install manifest="https://diek.us/bubble/manifest.json" manifestid=67890></install>
+    <install manifest="https://isitchristmas.com/manifest.json" manifestid=67890></install>
 
-    <h3>2 params, background doc, variable is a number for install url</h3>
+    <h3>2 params, background doc, variable is a number for manifest URL</h3>
     <p>Executes:</p>
     <pre><code>
       &lt;script&gt;const numUrl = 99999;&lt;/script&gt;
-      &lt;install id="installVarNumberUrl" manifestid="https://diek.us/bubble/"&gt;&lt;/install&gt;
+      &lt;install id="installVarNumberUrl" manifestid="https://isitchristmas.com/"&gt;&lt;/install&gt;
       &lt;script&gt;document.getElementById('installVarNumberUrl').setAttribute('manifest', numUrl);&lt;/script&gt;
     </code></pre>
     <script>const numUrl = 99999;</script>
-    <install id="installVarNumberUrl" manifestid="https://diek.us/bubble/"></install>
+    <install id="installVarNumberUrl" manifestid="https://isitchristmas.com/"></install>
     <script>document.getElementById('installVarNumberUrl').setAttribute('manifest', numUrl);</script>
 
     <h3>2 params, background doc, variable is a number for manifest id</h3>
     <p>Executes:</p>
     <pre><code>
       &lt;script&gt;const numManifest = 88888;&lt;/script&gt;
-      &lt;install id="installVarNumberManifest" manifest="https://diek.us/bubble/manifest.json"&gt;&lt;/install&gt;
+      &lt;install id="installVarNumberManifest" manifest="https://isitchristmas.com/manifest.json"&gt;&lt;/install&gt;
       &lt;script&gt;document.getElementById('installVarNumberManifest').setAttribute('manifestid', numManifest);&lt;/script&gt;
     </code></pre>
     <script>const numManifest = 88888;</script>
-    <install id="installVarNumberManifest" manifest="https://diek.us/bubble/manifest.json"></install>
+    <install id="installVarNumberManifest" manifest="https://isitchristmas.com/manifest.json"></install>
     <script>document.getElementById('installVarNumberManifest').setAttribute('manifestid', numManifest);</script>
 
-    <h3>2 params, background doc, variable is null for install url</h3>
+    <h3>2 params, background doc, variable is null for manifest URL</h3>
     <p>Executes:</p>
     <pre><code>
       &lt;script&gt;const nullUrl = null;&lt;/script&gt;
-      &lt;install id="installVarNullUrl" manifestid="https://diek.us/bubble/"&gt;&lt;/install&gt;
+      &lt;install id="installVarNullUrl" manifestid="https://isitchristmas.com/"&gt;&lt;/install&gt;
       &lt;script&gt;document.getElementById('installVarNullUrl').setAttribute('manifest', nullUrl);&lt;/script&gt;
     </code></pre>
     <script>const nullUrl = null;</script>
-    <install id="installVarNullUrl" manifestid="https://diek.us/bubble/"></install>
+    <install id="installVarNullUrl" manifestid="https://isitchristmas.com/"></install>
     <script>document.getElementById('installVarNullUrl').setAttribute('manifest', nullUrl);</script>
 
     <h3>2 params, background doc, variable is null for manifest id</h3>
     <p>Executes:</p>
     <pre><code>
       &lt;script&gt;const nullManifest = null;&lt;/script&gt;
-      &lt;install id="installVarNullManifest" manifest="https://diek.us/bubble/manifest.json"&gt;&lt;/install&gt;
+      &lt;install id="installVarNullManifest" manifest="https://isitchristmas.com/manifest.json"&gt;&lt;/install&gt;
       &lt;script&gt;document.getElementById('installVarNullManifest').setAttribute('manifestid', nullManifest);&lt;/script&gt;
     </code></pre>
     <script>const nullManifest = null;</script>
-    <install id="installVarNullManifest" manifest="https://diek.us/bubble/manifest.json"></install>
+    <install id="installVarNullManifest" manifest="https://isitchristmas.com/manifest.json"></install>
     <script>document.getElementById('installVarNullManifest').setAttribute('manifestid', nullManifest);</script>
 
-    <h3>2 params, background doc, variable is undefined for install url</h3>
+    <h3>2 params, background doc, variable is undefined for manifest URL</h3>
     <p>Executes:</p>
     <pre><code>
       &lt;script&gt;let undefinedUrl;&lt;/script&gt;
-      &lt;install id="installVarUndefinedUrl" manifestid="https://diek.us/bubble/"&gt;&lt;/install&gt;
+      &lt;install id="installVarUndefinedUrl" manifestid="https://isitchristmas.com/"&gt;&lt;/install&gt;
       &lt;script&gt;document.getElementById('installVarUndefinedUrl').setAttribute('manifest', undefinedUrl);&lt;/script&gt;
     </code></pre>
     <script>let undefinedUrl;</script>
-    <install id="installVarUndefinedUrl" manifestid="https://diek.us/bubble/"></install>
+    <install id="installVarUndefinedUrl" manifestid="https://isitchristmas.com/"></install>
     <script>document.getElementById('installVarUndefinedUrl').setAttribute('manifest', undefinedUrl);</script>
 
     <h3>2 params, background doc, variable is undefined for manifest id</h3>
     <p>Executes:</p>
     <pre><code>
       &lt;script&gt;let undefinedManifest;&lt;/script&gt;
-      &lt;install id="installVarUndefinedManifest" manifest="https://diek.us/bubble/manifest.json"&gt;&lt;/install&gt;
+      &lt;install id="installVarUndefinedManifest" manifest="https://isitchristmas.com/manifest.json"&gt;&lt;/install&gt;
       &lt;script&gt;document.getElementById('installVarUndefinedManifest').setAttribute('manifestid', undefinedManifest);&lt;/script&gt;
     </code></pre>
     <script>let undefinedManifest;</script>
-    <install id="installVarUndefinedManifest" manifest="https://diek.us/bubble/manifest.json"></install>
+    <install id="installVarUndefinedManifest" manifest="https://isitchristmas.com/manifest.json"></install>
     <script>document.getElementById('installVarUndefinedManifest').setAttribute('manifestid', undefinedManifest);</script>
 
     <script src="elements-app.js"></script>
