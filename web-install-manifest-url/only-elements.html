@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../style.css"/>
     <link rel="icon" href="./favicon.ico" />
   </head>
-  <body>
+  <body class="manifest-test-page">
     <h1>Install element test page</h1>
     <h2>Manifest-first installs!</h2>
     <p>Requires --enable-features=InstallElement, <br>OR enabling about://flags/#web-app-install-element,<br> OR an origin
@@ -31,25 +31,40 @@
       <a href="index.html">&larr; Back to main test page</a>
     </p>
 
+    <nav class="jump-links" aria-label="Page sections">
+      <strong>Jump to:</strong>
+      <ul>
+        <li><a href="#intended-use-cases">Intended use cases</a></li>
+        <li><a href="#invalid-data-cases"><code>invalid_data</code> cases</a></li>
+        <li><a href="#more-error-cases">More error cases</a></li>
+      </ul>
+    </nav>
+
+    <h2 id="intended-use-cases" class="test-section-heading section-intended">Intended Use Cases</h2>
+    <p>Expected <code>installresult</code>: <code>success</code>.</p>
+
+    <h3 class="test-case-heading">Current document, no attributes</h3>
     <p>Executes:</p>
     <pre><code>
       &lt;install&gt;&lt;/install&gt;
     </code></pre>
     <install></install>
 
+    <h3 class="test-case-heading">Background document, cross-origin manifest with custom <code>id</code></h3>
     <p>Executes:</p>
     <pre><code>
       &lt;install manifest="https://mustjab.github.io/manifest.json"&gt;&lt;/install&gt;
     </code></pre>
     <install manifest="https://mustjab.github.io/manifest.json"></install>
 
+    <h3 class="test-case-heading">Background document, cross-origin manifest and <code>manifestId</code></h3>
     <p>Executes:</p>
     <pre><code>
       &lt;install manifest="https://isitchristmas.com/manifest.json" manifestid="https://isitchristmas.com/"&gt;&lt;/install&gt;
     </code></pre>
     <install manifest="https://isitchristmas.com/manifest.json" manifestid="https://isitchristmas.com/"></install>
 
-    <h3>Background doc, same origin, manifest has `id`, manifestId undefined</h3>
+    <h3 class="test-case-heading">Background document, same-origin manifest has <code>id</code>, <code>manifestId</code> undefined</h3>
     <p>
       The <code>manifestId</code> property is optional. Assigning
       <code>undefined</code> to this nullable WebIDL property converts it to
@@ -71,16 +86,16 @@
       install.manifestId = undefined; // Nullable WebIDL converts this to null.
     </script>
 
-    <h2 style="color:Tomato;">invalid_data cases - manifest ID validation (&lt;install&gt; element)</h2>
+    <h2 id="invalid-data-cases" class="test-section-heading section-error"><code>invalid_data</code> Cases: Manifest ID Validation</h2>
 
-    <h3>1 param, background doc, NO id in manifest</h3>
+    <h3 class="test-case-heading">1 parameter, background document, manifest has no <code>id</code></h3>
     <p>Executes:</p>
     <pre><code>
       &lt;install manifest="https://amandabaker.github.io/pwa/web-install/manifest.webmanifest"&gt;&lt;/install&gt;
     </code></pre>
     <install manifest="https://amandabaker.github.io/pwa/web-install/manifest.webmanifest"></install>
 
-    <h3>Background doc, NO id in manifest, manifestId undefined</h3>
+    <h3 class="test-case-heading">Background document, manifest has no <code>id</code>, <code>manifestId</code> undefined</h3>
     <p>
       Assigning <code>undefined</code> to the nullable
       <code>manifestId</code> property converts it to <code>null</code>, so no
@@ -103,37 +118,45 @@
       installWithoutCustomId.manifestId = undefined; // Nullable WebIDL converts this to null.
     </script>
 
-    <h3>2 params, background doc, YES id in manifest, mismatched input</h3>
+    <h3 class="test-case-heading">2 parameters, background document, manifest has <code>id</code>, mismatched <code>manifestId</code></h3>
     <p>Executes:</p>
     <pre><code>
       &lt;install manifest="https://mustjab.github.io/manifest.json" manifestid="mismatched-manifest-id"&gt;&lt;/install&gt;
     </code></pre>
     <install manifest="https://mustjab.github.io/manifest.json" manifestid="mismatched-manifest-id"></install>
 
-    <h3>2 params, background doc, NO id in manifest, mismatched input</h3>
+    <h3 class="test-case-heading">2 parameters, background document, manifest has no <code>id</code>, mismatched <code>manifestId</code></h3>
     <p>Executes:</p>
     <pre><code>
       &lt;install manifest="https://amandabaker.github.io/pwa/web-install/manifest.webmanifest" manifestid="mismatched-manifest-id"&gt;&lt;/install&gt;
     </code></pre>
     <install manifest="https://amandabaker.github.io/pwa/web-install/manifest.webmanifest" manifestid="mismatched-manifest-id"></install>
 
-    <h2 style="color:Tomato;">More Error Cases</h2>
+    <h2 id="more-error-cases" class="test-section-heading section-error">More Error Cases</h2>
+    <p>Expected <code>installresult</code>: <code>invalid_data</code>.</p>
 
-    <h3>2 params, background doc, invalid type for manifest URL</h3>
+    <h3 class="test-case-heading">1 parameter, background document, relative URL is valid but fetching and processing fail</h3>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install manifest="badurl"&gt;&lt;/install&gt;
+    </code></pre>
+    <install manifest="badurl"></install>
+
+    <h3 class="test-case-heading">2 parameters, background document, invalid type for manifest URL</h3>
     <p>Executes:</p>
     <pre><code>
       &lt;install manifest=12345 manifestid="https://isitchristmas.com/"&gt;&lt;/install&gt;
     </code></pre>
     <install manifest=12345 manifestid="https://isitchristmas.com/"></install>
 
-    <h3>2 params, background doc, invalid type for manifest id</h3>
+    <h3 class="test-case-heading">2 parameters, background document, invalid type for <code>manifestId</code></h3>
     <p>Executes:</p>
     <pre><code>
       &lt;install manifest="https://isitchristmas.com/manifest.json" manifestid=67890&gt;&lt;/install&gt;
     </code></pre>
     <install manifest="https://isitchristmas.com/manifest.json" manifestid=67890></install>
 
-    <h3>2 params, background doc, variable is a number for manifest URL</h3>
+    <h3 class="test-case-heading">2 parameters, background document, manifest URL variable is a number</h3>
     <p>Executes:</p>
     <pre><code>
       &lt;script&gt;const numUrl = 99999;&lt;/script&gt;
@@ -144,7 +167,7 @@
     <install id="installVarNumberUrl" manifestid="https://isitchristmas.com/"></install>
     <script>document.getElementById('installVarNumberUrl').setAttribute('manifest', numUrl);</script>
 
-    <h3>2 params, background doc, variable is a number for manifest id</h3>
+    <h3 class="test-case-heading">2 parameters, background document, <code>manifestId</code> variable is a number</h3>
     <p>Executes:</p>
     <pre><code>
       &lt;script&gt;const numManifest = 88888;&lt;/script&gt;
@@ -155,7 +178,7 @@
     <install id="installVarNumberManifest" manifest="https://isitchristmas.com/manifest.json"></install>
     <script>document.getElementById('installVarNumberManifest').setAttribute('manifestid', numManifest);</script>
 
-    <h3>2 params, background doc, variable is null for manifest URL</h3>
+    <h3 class="test-case-heading">2 parameters, background document, manifest URL variable is null</h3>
     <p>Executes:</p>
     <pre><code>
       &lt;script&gt;const nullUrl = null;&lt;/script&gt;
@@ -166,7 +189,7 @@
     <install id="installVarNullUrl" manifestid="https://isitchristmas.com/"></install>
     <script>document.getElementById('installVarNullUrl').setAttribute('manifest', nullUrl);</script>
 
-    <h3>2 params, background doc, variable is null for manifest id</h3>
+    <h3 class="test-case-heading">2 parameters, background document, <code>manifestId</code> variable is null</h3>
     <p>Executes:</p>
     <pre><code>
       &lt;script&gt;const nullManifest = null;&lt;/script&gt;
@@ -177,7 +200,7 @@
     <install id="installVarNullManifest" manifest="https://isitchristmas.com/manifest.json"></install>
     <script>document.getElementById('installVarNullManifest').setAttribute('manifestid', nullManifest);</script>
 
-    <h3>2 params, background doc, variable is undefined for manifest URL</h3>
+    <h3 class="test-case-heading">2 parameters, background document, manifest URL variable is undefined</h3>
     <p>Executes:</p>
     <pre><code>
       &lt;script&gt;let undefinedUrl;&lt;/script&gt;
@@ -188,7 +211,7 @@
     <install id="installVarUndefinedUrl" manifestid="https://isitchristmas.com/"></install>
     <script>document.getElementById('installVarUndefinedUrl').setAttribute('manifest', undefinedUrl);</script>
 
-    <h3>2 params, background doc, variable is undefined for manifest id</h3>
+    <h3 class="test-case-heading">2 parameters, background document, <code>manifestId</code> variable is undefined</h3>
     <p>Executes:</p>
     <pre><code>
       &lt;script&gt;let undefinedManifest;&lt;/script&gt;

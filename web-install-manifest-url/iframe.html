@@ -33,9 +33,9 @@
 
     <p>Executes (Installing self with params):</p>
     <pre><code>
-      &lt;install manifest="https://kbhlee2121.github.io/pwa/web-install/manifest.webmanifest"&gt;&lt;/install&gt;
+      &lt;install manifest="./manifest.webmanifest"&gt;&lt;/install&gt;
     </code></pre>
-    <install manifest="https://kbhlee2121.github.io/pwa/web-install/manifest.webmanifest" id="framedSelfElement"></install>
+    <install manifest="./manifest.webmanifest" id="framedSelfElement"></install>
 
     <p>Executes:</p>
     <pre><code>
@@ -49,7 +49,7 @@
       console.error("navigator.install is not available.");
     }
 
-    // Same-origin with 2 params.
+    // Cross-origin manifest only.
     document.getElementById("framedApi").addEventListener("click", async () => {
       try {
         let manifest = "https://mustjab.github.io/manifest.json";
