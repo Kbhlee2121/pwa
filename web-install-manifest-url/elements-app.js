@@ -2,14 +2,21 @@
 if ('HTMLInstallElement' in window) {
   document.querySelectorAll('install').forEach((el, index) => {
     // Create identifier for debugging
-    const manifest = el.getAttribute('manifest') || 'current-page';
-    const manifestId = el.getAttribute('manifestid') || 'default';
-    const identifier = `install-${index} (${manifest})`;
+    const manifestAttribute = el.getAttribute('manifest');
+    const identifier = `install-${index} (${manifestAttribute ?? 'current-page'})`;
 
     // Listen for the single install result event.
     el.addEventListener('installresult', (event) => {
       console.log(`${identifier} - installresult:`, {
         result: event.result,
+        attributes: {
+          manifest: el.getAttribute('manifest'),
+          manifestId: el.getAttribute('manifestid')
+        },
+        properties: {
+          manifest: el.manifest,
+          manifestId: el.manifestId
+        },
         event: event
       });
     });
