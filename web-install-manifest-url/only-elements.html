@@ -64,28 +64,6 @@
     </code></pre>
     <install manifest="https://isitchristmas.com/manifest.json" manifestid="https://isitchristmas.com/"></install>
 
-    <h3 class="test-case-heading">Background document, same-origin manifest has <code>id</code>, <code>manifestId</code> undefined</h3>
-    <p>
-      The <code>manifestId</code> property is optional. Assigning
-      <code>undefined</code> to this nullable WebIDL property converts it to
-      <code>null</code>, so no manifest ID is supplied. Installation can still
-      succeed because the manifest declares a custom <code>id</code>. Expected
-      result: <code>success</code>.
-    </p>
-    <p>Executes:</p>
-    <pre><code>
-      &lt;install id="installUndefinedManifestId" manifest="https://kbhlee2121.github.io/pwa/web-install/manifest.webmanifest"&gt;&lt;/install&gt;
-      &lt;script&gt;
-        const install = document.getElementById("installUndefinedManifestId");
-        install.manifestId = undefined; // Nullable WebIDL converts this to null.
-      &lt;/script&gt;
-    </code></pre>
-    <install id="installUndefinedManifestId" manifest="https://kbhlee2121.github.io/pwa/web-install/manifest.webmanifest"></install>
-    <script>
-      const install = document.getElementById("installUndefinedManifestId");
-      install.manifestId = undefined; // Nullable WebIDL converts this to null.
-    </script>
-
     <h2 id="invalid-data-cases" class="test-section-heading section-error"><code>invalid_data</code> Cases: Manifest ID Validation</h2>
 
     <h3 class="test-case-heading">1 parameter, background document, manifest has no <code>id</code></h3>
@@ -94,29 +72,6 @@
       &lt;install manifest="https://amandabaker.github.io/pwa/web-install/manifest.webmanifest"&gt;&lt;/install&gt;
     </code></pre>
     <install manifest="https://amandabaker.github.io/pwa/web-install/manifest.webmanifest"></install>
-
-    <h3 class="test-case-heading">Background document, manifest has no <code>id</code>, <code>manifestId</code> undefined</h3>
-    <p>
-      Assigning <code>undefined</code> to the nullable
-      <code>manifestId</code> property converts it to <code>null</code>, so no
-      manifest ID is supplied. This manifest does not declare a custom
-      <code>id</code>, so the expected <code>installresult</code> value is
-      <code>invalid_data</code>, equivalent to
-      <code>navigator.install()</code> rejecting with <code>DataError</code>.
-    </p>
-    <p>Executes:</p>
-    <pre><code>
-      &lt;install id="installUndefinedManifestIdNoCustomId" manifest="https://isitchristmas.com/manifest.json"&gt;&lt;/install&gt;
-      &lt;script&gt;
-        const installWithoutCustomId = document.getElementById("installUndefinedManifestIdNoCustomId");
-        installWithoutCustomId.manifestId = undefined; // Nullable WebIDL converts this to null.
-      &lt;/script&gt;
-    </code></pre>
-    <install id="installUndefinedManifestIdNoCustomId" manifest="https://isitchristmas.com/manifest.json"></install>
-    <script>
-      const installWithoutCustomId = document.getElementById("installUndefinedManifestIdNoCustomId");
-      installWithoutCustomId.manifestId = undefined; // Nullable WebIDL converts this to null.
-    </script>
 
     <h3 class="test-case-heading">2 parameters, background document, manifest has <code>id</code>, mismatched <code>manifestId</code></h3>
     <p>Executes:</p>
@@ -221,6 +176,94 @@
     <script>let undefinedManifest;</script>
     <install id="installVarUndefinedManifest" manifest="https://isitchristmas.com/manifest.json"></install>
     <script>document.getElementById('installVarUndefinedManifest').setAttribute('manifestid', undefinedManifest);</script>
+
+    <h3 class="test-case-heading">Background document, manifest URL assigned null</h3>
+    <p>
+      The non-nullable IDL property stringifies <code>null</code>, reflects
+      <code>manifest="null"</code>, and resolves it as a relative URL.
+    </p>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install id="installPropertyNullManifest" manifestid="https://isitchristmas.com/"&gt;&lt;/install&gt;
+      &lt;script&gt;
+        const installPropertyNullManifest = document.getElementById("installPropertyNullManifest");
+        installPropertyNullManifest.manifest = null;
+        console.log(installPropertyNullManifest.getAttribute("manifest")); // "null"
+        console.log(installPropertyNullManifest.manifest); // Resolved URL ending in /null
+      &lt;/script&gt;
+    </code></pre>
+    <install id="installPropertyNullManifest" manifestid="https://isitchristmas.com/"></install>
+    <script>
+      const installPropertyNullManifest = document.getElementById("installPropertyNullManifest");
+      installPropertyNullManifest.manifest = null;
+      console.log(installPropertyNullManifest.getAttribute("manifest")); // "null"
+      console.log(installPropertyNullManifest.manifest); // Resolved URL ending in /null
+    </script>
+
+    <h3 class="test-case-heading">Background document, manifest has no <code>id</code>, <code>manifestId</code> assigned null</h3>
+    <p>
+      The non-nullable IDL property stringifies <code>null</code>, reflects
+      <code>manifestid="null"</code>, and resolves it as a relative URL.
+    </p>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install id="installPropertyNullManifestId" manifest="https://isitchristmas.com/manifest.json"&gt;&lt;/install&gt;
+      &lt;script&gt;
+        const installPropertyNullManifestId = document.getElementById("installPropertyNullManifestId");
+        installPropertyNullManifestId.manifestId = null;
+        console.log(installPropertyNullManifestId.getAttribute("manifestid")); // "null"
+        console.log(installPropertyNullManifestId.manifestId); // Resolved URL ending in /null
+      &lt;/script&gt;
+    </code></pre>
+    <install id="installPropertyNullManifestId" manifest="https://isitchristmas.com/manifest.json"></install>
+    <script>
+      const installPropertyNullManifestId = document.getElementById("installPropertyNullManifestId");
+      installPropertyNullManifestId.manifestId = null;
+      console.log(installPropertyNullManifestId.getAttribute("manifestid")); // "null"
+      console.log(installPropertyNullManifestId.manifestId); // Resolved URL ending in /null
+    </script>
+
+    <h3 class="test-case-heading">Background document, manifest has <code>id</code>, <code>manifestId</code> assigned undefined</h3>
+    <p>
+      The non-nullable <code>manifestId</code> IDL property stringifies
+      <code>undefined</code> and reflects <code>manifestid="undefined"</code>.
+      The resulting manifest ID does not match the manifest's custom
+      <code>id</code>.
+    </p>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install id="installUndefinedManifestId" manifest="https://kbhlee2121.github.io/pwa/web-install/manifest.webmanifest"&gt;&lt;/install&gt;
+      &lt;script&gt;
+        const installWithCustomId = document.getElementById("installUndefinedManifestId");
+        installWithCustomId.manifestId = undefined;
+      &lt;/script&gt;
+    </code></pre>
+    <install id="installUndefinedManifestId" manifest="https://kbhlee2121.github.io/pwa/web-install/manifest.webmanifest"></install>
+    <script>
+      const installWithCustomId = document.getElementById("installUndefinedManifestId");
+      installWithCustomId.manifestId = undefined;
+    </script>
+
+    <h3 class="test-case-heading">Background document, manifest has no <code>id</code>, <code>manifestId</code> assigned undefined</h3>
+    <p>
+      Assigning <code>undefined</code> to the non-nullable
+      <code>manifestId</code> IDL property reflects
+      <code>manifestid="undefined"</code>. The resulting manifest ID does not
+      match the manifest's default ID.
+    </p>
+    <p>Executes:</p>
+    <pre><code>
+      &lt;install id="installUndefinedManifestIdNoCustomId" manifest="https://isitchristmas.com/manifest.json"&gt;&lt;/install&gt;
+      &lt;script&gt;
+        const installWithoutCustomId = document.getElementById("installUndefinedManifestIdNoCustomId");
+        installWithoutCustomId.manifestId = undefined;
+      &lt;/script&gt;
+    </code></pre>
+    <install id="installUndefinedManifestIdNoCustomId" manifest="https://isitchristmas.com/manifest.json"></install>
+    <script>
+      const installWithoutCustomId = document.getElementById("installUndefinedManifestIdNoCustomId");
+      installWithoutCustomId.manifestId = undefined;
+    </script>
 
     <script src="elements-app.js"></script>
   </body>
