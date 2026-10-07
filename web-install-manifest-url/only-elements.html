@@ -35,7 +35,7 @@
       <strong>Jump to:</strong>
       <ul>
         <li><a href="#intended-use-cases">Intended use cases</a></li>
-        <li><a href="#invalid-data-cases"><code>invalid_data</code> cases</a></li>
+        <li><a href="#invalid-data-cases"><code>invalid-data</code> cases</a></li>
         <li><a href="#more-error-cases">More error cases</a></li>
       </ul>
     </nav>
@@ -64,7 +64,13 @@
     </code></pre>
     <install manifest="https://isitchristmas.com/manifest.json" manifestid="https://isitchristmas.com/"></install>
 
-    <h2 id="invalid-data-cases" class="test-section-heading section-error"><code>invalid_data</code> Cases: Manifest ID Validation</h2>
+    <h2 id="invalid-data-cases" class="test-section-heading section-error"><code>invalid-data</code> Cases: Manifest ID Validation</h2>
+    <p>
+      <strong>Version note:</strong> In Chromium-based browsers, including
+      Microsoft Edge and Google Chrome, versions 157 and later report
+      <code>invalid-data</code>. Use <code>invalid_data</code> when testing
+      version 156 or earlier.
+    </p>
 
     <h3 class="test-case-heading">1 parameter, background document, manifest has no <code>id</code></h3>
     <p>Executes:</p>
@@ -88,7 +94,7 @@
     <install manifest="https://amandabaker.github.io/pwa/web-install/manifest.webmanifest" manifestid="mismatched-manifest-id"></install>
 
     <h2 id="more-error-cases" class="test-section-heading section-error">More Error Cases</h2>
-    <p>Expected <code>installresult</code>: <code>invalid_data</code>.</p>
+    <p>Expected <code>installresult</code>: <code>invalid-data</code>.</p>
 
     <h3 class="test-case-heading">1 parameter, background document, relative URL is valid but fetching and processing fail</h3>
     <p>Executes:</p>

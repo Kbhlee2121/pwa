@@ -44,6 +44,12 @@
         (restart the browser after toggling).
       </p>
       <p>
+        <strong>Version note:</strong> In Chromium-based browsers, including
+        Microsoft Edge and Google Chrome, versions 157 and later report
+        <code>invalid-data</code>. Use <code>invalid_data</code> when testing
+        version 156 or earlier.
+      </p>
+      <p>
         Open DevTools Issues before triggering a case. Test one entry point per
         card, then reload before triggering the other; identical Issues
         deduplicate.
@@ -116,7 +122,7 @@
             <dt><code>navigator.install({manifest})</code> result</dt>
             <dd><code>DataError</code></dd>
             <dt>Targeted <code>&lt;install manifest&gt;</code> result</dt>
-            <dd><code>invalid_data</code></dd>
+            <dd><code>invalid-data</code></dd>
             <dt>Other Issues</dt>
             <dd>${scenario.otherIssues}</dd>
           </dl>
