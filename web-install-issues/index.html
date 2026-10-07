@@ -36,6 +36,12 @@
         produces. Do not expect a successful install on any page in this
         directory.
       </p>
+      <p>
+        <strong>Version note:</strong> In Chromium-based browsers, including
+        Microsoft Edge and Google Chrome, versions 157 and later report
+        <code>invalid-data</code>. Use <code>invalid_data</code> when testing
+        version 156 or earlier.
+      </p>
 
       <section class="steps" aria-labelledby="build-heading">
         <h2 id="build-heading">What you need</h2>
@@ -65,7 +71,7 @@
           <li>Open one scenario link below in the same tab.</li>
           <li>Click the <code>navigator.install()</code> button and read the
             Issue. Confirm the page-visible result matches the expected
-            <code>DataError</code> / <code>invalid_data</code>.</li>
+            <code>DataError</code> / <code>invalid-data</code>.</li>
           <li>Reload the scenario page (or clear Issues) before triggering the
             other entry point. Identical Issues deduplicate, so a reload is
             the reliable way to see the second entry point produce its own
@@ -92,7 +98,7 @@
             <dt>Page-visible result</dt>
             <dd><code>navigator.install()</code> rejects with
               <code>DataError</code>; <code>&lt;install&gt;</code> returns
-              <code>invalid_data</code>.</dd>
+              <code>invalid-data</code>.</dd>
           </dl>
           <a href="./current-document.html?scenario=no-manifest">Open scenario</a>
         </div>
@@ -153,7 +159,7 @@
             <dt>Page-visible result</dt>
             <dd><code>navigator.install()</code> still rejects with
               <code>DataError</code>; <code>&lt;install&gt;</code> still returns
-              <code>invalid_data</code>.</dd>
+              <code>invalid-data</code>.</dd>
           </dl>
           <a href="./current-document.html?scenario=cross-origin">Open scenario</a>
         </div>

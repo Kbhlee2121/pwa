@@ -111,6 +111,12 @@
     <main>
       <p class="pill" id="scenario-pill">Scenario: <span id="scenario-name"></span></p>
       <h1 id="scenario-title"></h1>
+      <p>
+        <strong>Version note:</strong> In Chromium-based browsers, including
+        Microsoft Edge and Google Chrome, versions 157 and later report
+        <code>invalid-data</code>. Use <code>invalid_data</code> when testing
+        version 156 or earlier.
+      </p>
 
       <section class="expected" aria-labelledby="expected-heading">
         <h2 id="expected-heading">Expected behavior</h2>
@@ -122,7 +128,7 @@
           <dt><code>navigator.install()</code> result</dt>
           <dd><code>DataError</code></dd>
           <dt>Untargeted <code>&lt;install&gt;</code> result</dt>
-          <dd><code>invalid_data</code></dd>
+          <dd><code>invalid-data</code></dd>
           <dt>Other Issues</dt>
           <dd id="expected-other-issues"></dd>
         </dl>

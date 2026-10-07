@@ -33,7 +33,11 @@ Explicit / background-manifest (manifest argument supplied):
 
 The explicit-manifest page covers scenarios 2–6 plus a missing-`start_url`
 variant. In every case the page-visible result is `DataError` (from
-`navigator.install`) or `invalid_data` (from `<install>`).
+`navigator.install`) or `invalid-data` (from `<install>`).
+
+**Version note:** In Chromium-based browsers, including Microsoft Edge and
+Google Chrome, versions 157 and later report `invalid-data`. Use `invalid_data`
+when testing version 156 or earlier.
 
 ## Tester workflow
 
